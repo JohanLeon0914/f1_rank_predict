@@ -52,6 +52,9 @@ Si el puerto `8000` esta ocupado:
 .venv/bin/python scripts/run_api.py --port 8010
 ```
 
+En Railway el servicio usa automaticamente la variable `PORT` provista por la
+plataforma mediante `railway.json`.
+
 Endpoints:
 
 - `GET /health`: valida que existan los artefactos del modelo.
