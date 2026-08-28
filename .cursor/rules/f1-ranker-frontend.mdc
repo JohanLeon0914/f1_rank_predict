@@ -1,0 +1,308 @@
+---
+description: Build a separate Next.js + Tailwind frontend for the F1 Ranker ML API.
+globs:
+  - "**/*"
+alwaysApply: false
+---
+
+# F1 Ranker Frontend Rule
+
+Use this rule when creating or modifying a separate frontend that consumes this project's FastAPI ML API.
+
+## Project Context
+
+This repository contains a Python/FastAPI machine learning API for Formula 1 race ranking predictions.
+
+Run the API locally with:
+
+```bash
+.venv/bin/python scripts/run_api.py
+```
+
+Default local API base URL:
+
+```txt
+http://localhost:8000
+```
+
+If port `8000` is busy:
+
+```bash
+.venv/bin/python scripts/run_api.py --port 8010
+```
+
+The frontend must be created as a separate app, preferably in a sibling or dedicated folder such as:
+
+```txt
+frontend/
+```
+
+Recommended stack:
+
+- Next.js App Router
+- TypeScript
+- Tailwind CSS
+- React Hook Form or controlled React forms
+- Zod for client-side validation
+
+## API Endpoints
+
+### `GET /health`
+
+Purpose: Check if the model artifacts exist and the API is ready.
+
+Success response:
+
+```json
+{
+  "status": "ok"
+}
+```
+
+Possible error:
+
+- `503` when model artifacts are missing.
+
+The frontend should show API status clearly, especially before submitting predictions.
+
+### `GET /metrics`
+
+Purpose: Show metrics from the latest model training.
+
+The response shape is a JSON object loaded from `models/metrics.joblib`. Do not hardcode the exact metric keys. Render the result defensively as cards/table rows from the returned object.
+
+The current README documents these metrics:
+
+- NDCG
+- Spearman
+- Kendall tau
+- MAE posicion
+- Top 1
+- Top 3
+- Top 10
+
+Possible error:
+
+- `503` when metrics are missing.
+
+### `POST /predict`
+
+Purpose: Predict the expected finishing ranking for a race.
+
+Request body:
+
+```ts
+type PredictionRequest = {
+  race_id: number;
+  circuit_id: number;
+  race_date?: string | null;
+  participants: ParticipantRequest[];
+};
+
+type ParticipantRequest = {
+  driverId: number;
+  constructorId: number;
+  grid?: number | null;
+  qualifying_position?: number | null;
+  q1?: string | number | null;
+  q2?: string | number | null;
+  q3?: string | number | null;
+};
+```
+
+Constraints:
+
+- `participants` must contain at least 2 drivers.
+- `race_date` is required when `race_id` does not exist in `F1/CSVs/races.csv`.
+- Qualifying times should support values like `1:26.572`.
+- Nullable fields must be sent as `null`, not empty strings.
+
+Response body:
+
+```ts
+type PredictionResponse = {
+  race_id: number;
+  circuit_id: number;
+  predictions: PredictionItem[];
+};
+
+type PredictionItem = {
+  predicted_position: number;
+  driverId: number;
+  score: number;
+};
+```
+
+Possible errors:
+
+- `400` for prediction/domain errors.
+- `422` for validation errors.
+- `503` if model artifacts or metrics are unavailable.
+
+The frontend must display these errors in Spanish with useful context.
+
+## Required Frontend Functionality
+
+Build the actual app interface as the first screen. Do not build a marketing landing page.
+
+The frontend should include:
+
+- API health indicator using `GET /health`.
+- Metrics view using `GET /metrics`.
+- Prediction form using `POST /predict`.
+- Dynamic participant table/form where users can add, edit, duplicate, and remove drivers.
+- Minimum participant validation before submit.
+- Loading, success, empty, and error states.
+- Prediction result table sorted by `predicted_position`.
+- Clear reset action for starting a new prediction.
+- API base URL configuration through an environment variable.
+
+Recommended environment variable:
+
+```txt
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+```
+
+## UX Requirements
+
+Design the UI as an operational ML tool for race prediction, not as a marketing site.
+
+Use:
+
+- Dense but readable dashboard layout.
+- Tabs or segmented navigation for `Prediccion`, `Metricas`, and `Estado API`.
+- Tables for participants and predictions.
+- Inputs for numeric IDs and grid/qualifying positions.
+- Date input for `race_date`.
+- Inline validation messages.
+- Badges or compact status indicators for API health.
+- Buttons with icons when available.
+
+Avoid:
+
+- Oversized hero sections.
+- Decorative cards nested inside cards.
+- Purely illustrative layouts that hide the workflow.
+- Hardcoded driver names unless a local data source is explicitly added.
+
+## Implementation Requirements
+
+Keep API code isolated in a small client module, for example:
+
+```txt
+frontend/src/lib/f1-ranker-api.ts
+```
+
+The client module should export typed functions:
+
+```ts
+getHealth()
+getMetrics()
+predictRace(payload)
+```
+
+Always handle non-2xx API responses and parse FastAPI error shapes:
+
+```ts
+type FastApiError = {
+  detail?: string | { [key: string]: unknown } | Array<unknown>;
+};
+```
+
+When converting form values:
+
+- Convert numeric fields to numbers.
+- Convert empty optional values to `null`.
+- Preserve qualifying time strings when present.
+- Trim text inputs.
+
+Use TypeScript types that mirror the FastAPI/Pydantic models in `src/f1_ranker/api.py`.
+
+## Suggested Screens
+
+### Prediction Screen
+
+Fields:
+
+- `race_id`
+- `circuit_id`
+- `race_date`
+- Participant rows:
+  - `driverId`
+  - `constructorId`
+  - `grid`
+  - `qualifying_position`
+  - `q1`
+  - `q2`
+  - `q3`
+
+Actions:
+
+- Add participant
+- Duplicate row
+- Remove row
+- Load example payload
+- Submit prediction
+- Reset
+
+Result:
+
+- Table with `predicted_position`, `driverId`, and `score`.
+
+### Metrics Screen
+
+Render model metrics from `/metrics`. Support unknown object shapes gracefully.
+
+### API Status Screen
+
+Show:
+
+- API base URL
+- health status
+- last checked timestamp
+- manual refresh button
+
+## Local Development Commands
+
+Backend:
+
+```bash
+.venv/bin/python scripts/run_api.py
+```
+
+Frontend example:
+
+```bash
+cd frontend
+npm run dev
+```
+
+If creating the frontend from scratch:
+
+```bash
+npx create-next-app@latest frontend --ts --tailwind --eslint --app --src-dir --import-alias "@/*"
+```
+
+## CORS Note
+
+If the browser blocks requests because of CORS, update the FastAPI app in `src/f1_ranker/api.py` to include `CORSMiddleware` for the local frontend origin, usually:
+
+```txt
+http://localhost:3000
+```
+
+Do not disable CORS broadly for production without an explicit reason.
+
+## Acceptance Criteria
+
+The frontend is complete when:
+
+- The backend can run locally.
+- The frontend can configure the API URL.
+- `/health` is visible in the UI.
+- `/metrics` is visible in the UI.
+- Users can submit a valid prediction payload.
+- FastAPI validation errors are shown clearly.
+- Prediction results are sorted and readable.
+- The app works on desktop and mobile widths.
+- TypeScript, linting, and build checks pass.
