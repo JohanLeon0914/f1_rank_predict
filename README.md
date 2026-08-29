@@ -59,7 +59,7 @@ Endpoints:
 
 - `GET /health`: valida que existan los artefactos del modelo.
 - `GET /metrics`: devuelve las metricas guardadas del ultimo entrenamiento.
-- `POST /predict`: predice el ranking de una carrera.
+- `POST /predict`: predice el ranking de una carrera y devuelve datos de analisis del modelo.
 
 ### Contrato de `POST /predict`
 
@@ -109,15 +109,137 @@ Respuesta:
 {
   "race_id": 1180,
   "circuit_id": 11,
+  "race_date": "2026-08-02",
+  "dashboard_analysis": {
+    "top_3": {
+      "label": "Predicted podium",
+      "requested_size": 3,
+      "actual_size": 3,
+      "drivers": [
+        {
+          "predicted_position": 1,
+          "driverId": 844,
+          "constructorId": 6,
+          "score": 2.1352577209
+        }
+      ],
+      "score_summary": {
+        "average": 1.9186,
+        "min": 1.5957,
+        "max": 2.1352,
+        "spread": 0.5395
+      },
+      "shared_top_contributions": [
+        {
+          "feature": "driver_last_10_top3_rate",
+          "mean_contribution": 0.185,
+          "total_contribution": 0.555,
+          "abs_mean_contribution": 0.185,
+          "direction": "up"
+        }
+      ],
+      "feature_group_averages": {
+        "starting_position": {
+          "grid": 2,
+          "qualifying_position": 2,
+          "qualifying_gap_to_pole_ms": 180
+        }
+      }
+    },
+    "top_5": {
+      "label": "Predicted top 5",
+      "requested_size": 5,
+      "actual_size": 5,
+      "drivers": [],
+      "score_summary": {},
+      "shared_top_contributions": [],
+      "feature_group_averages": {}
+    },
+    "top_10": {
+      "label": "Predicted top 10",
+      "requested_size": 10,
+      "actual_size": 10,
+      "drivers": [],
+      "score_summary": {},
+      "shared_top_contributions": [],
+      "feature_group_averages": {}
+    }
+  },
+  "analysis_summary": {
+    "participant_count": 2,
+    "model_output_note": "score is a relative ranking value; it is not a probability or a causal prediction.",
+    "explanation_note": "top_contributions shows how much each feature pushes a driver score inside the XGBoost model for this request.",
+    "global_feature_importance": [
+      {
+        "feature": "driver_last_10_top3_rate",
+        "importance": 0.33257326,
+        "importance_pct": 0.33257326
+      }
+    ],
+    "model_metrics": {
+      "validation": {
+        "ndcg": 0.947,
+        "spearman": 0.649,
+        "mae_position": 3.809,
+        "top1_accuracy": 0.506,
+        "top3_accuracy": 0.648,
+        "top10_accuracy": 0.761
+      },
+      "test": {
+        "ndcg": 0.948,
+        "spearman": 0.651,
+        "mae_position": 3.394,
+        "top1_accuracy": 0.517,
+        "top3_accuracy": 0.676,
+        "top10_accuracy": 0.775
+      }
+    },
+    "available_feature_groups": [
+      "starting_position",
+      "driver_form",
+      "driver_circuit_history",
+      "constructor_form",
+      "constructor_circuit_fit",
+      "constructor_pair",
+      "circuit_profile"
+    ]
+  },
   "predictions": [
     {
       "predicted_position": 1,
       "driverId": 844,
-      "score": 1.76
+      "constructorId": 6,
+      "score": 1.76,
+      "analysis": {
+        "feature_groups": {
+          "starting_position": {
+            "grid": 1,
+            "qualifying_position": 1,
+            "qualifying_gap_to_pole_ms": 0
+          },
+          "driver_form": {
+            "driver_last_10_top3_rate": 0.7
+          }
+        },
+        "top_contributions": [
+          {
+            "feature": "grid",
+            "contribution": 0.4676779807,
+            "abs_contribution": 0.4676779807,
+            "direction": "up"
+          }
+        ],
+        "bias": 0.1291
+      }
     }
   ]
 }
 ```
+
+`score` es una puntuacion relativa de ranking, no una probabilidad. El bloque
+`analysis` incluye snapshots de features y contribuciones internas de XGBoost
+para construir dashboards explicativos sin afirmar causalidad. `dashboard_analysis`
+resume el podio, top 5 y top 10 predichos.
 
 ## Ejecutar con Docker
 

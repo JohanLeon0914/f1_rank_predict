@@ -26,6 +26,7 @@ DATASET_SPECS = {
             "grid",
             "rank",
             "positionOrder",
+            "statusId",
         ),
     ),
     "races": DatasetSpec(

@@ -29,6 +29,7 @@ RAW_RESULT_COLUMNS = [
     "rank",
     "points",
     "positionOrder",
+    "statusId",
 ]
 
 MODEL_FEATURE_COLUMNS = [
@@ -45,6 +46,10 @@ MODEL_FEATURE_COLUMNS = [
     "circuit_lat",
     "circuit_lng",
     "circuit_alt",
+    "circuit_speed_score",
+    "circuit_aero_load_score",
+    "circuit_corner_density_score",
+    "circuit_is_street",
     "driver_circuit_pit_time_mean_hist",
     "driver_circuit_pit_time_total_hist",
     "driver_circuit_pit_stop_count_mean_hist",
@@ -70,25 +75,110 @@ MODEL_FEATURE_COLUMNS = [
     "driver_last_3_top10_rate",
     "driver_last_5_top10_rate",
     "driver_last_10_top10_rate",
+    "driver_last_3_dnf_rate",
+    "driver_last_5_dnf_rate",
+    "driver_last_10_dnf_rate",
+    "driver_last_3_qualy_finish_delta",
+    "driver_last_5_qualy_finish_delta",
+    "driver_last_10_qualy_finish_delta",
     "driver_season_points_before_race",
+    "driver_circuit_dnf_rate_hist",
+    "driver_similar_circuit_finish_position_mean_hist",
+    "driver_similar_circuit_top10_rate_hist",
+    "driver_similar_circuit_dnf_rate_hist",
     "constructor_points_prev",
     "constructor_wins_prev",
     "constructor_championship_position_mean_hist",
     "constructor_circuit_finish_position_mean_hist",
     "constructor_circuit_wins_hist",
+    "constructor_circuit_top10_rate_hist",
+    "constructor_circuit_dnf_rate_hist",
     "constructor_last_3_avg_finish_position",
     "constructor_last_5_avg_finish_position",
     "constructor_last_10_avg_finish_position",
     "constructor_last_3_top10_rate",
     "constructor_last_5_top10_rate",
     "constructor_last_10_top10_rate",
+    "constructor_last_3_dnf_rate",
+    "constructor_last_5_dnf_rate",
+    "constructor_last_10_dnf_rate",
+    "constructor_last_3_qualy_finish_delta",
+    "constructor_last_5_qualy_finish_delta",
+    "constructor_last_10_qualy_finish_delta",
     "constructor_season_points_before_race",
+    "constructor_similar_circuit_finish_position_mean_hist",
+    "constructor_similar_circuit_top10_rate_hist",
+    "constructor_similar_circuit_dnf_rate_hist",
+    "constructor_speed_profile_finish_position_mean_hist",
+    "constructor_speed_profile_top10_rate_hist",
+    "constructor_speed_profile_dnf_rate_hist",
+    "constructor_aero_profile_finish_position_mean_hist",
+    "constructor_aero_profile_top10_rate_hist",
+    "constructor_aero_profile_dnf_rate_hist",
+    "constructor_street_finish_position_mean_hist",
+    "constructor_street_top10_rate_hist",
+    "constructor_street_dnf_rate_hist",
+    "constructor_pair_last_3_avg_finish_position",
+    "constructor_pair_last_5_avg_finish_position",
+    "constructor_pair_last_3_best_finish_position",
+    "constructor_pair_last_5_best_finish_position",
+    "constructor_pair_last_3_points",
+    "constructor_pair_last_5_points",
+    "constructor_pair_last_3_both_top10_rate",
+    "constructor_pair_last_5_both_top10_rate",
+    "constructor_pair_last_3_double_dnf_rate",
+    "constructor_pair_last_5_double_dnf_rate",
 ]
 
 CATEGORICAL_FEATURES = ["circuitId"]
 NUMERIC_FEATURES = [
     column for column in MODEL_FEATURE_COLUMNS if column not in CATEGORICAL_FEATURES
 ]
+
+CLASSIFIED_STATUS_IDS = set(range(1, 20))
+
+CIRCUIT_PROFILE_OVERRIDES = {
+    "monza": (5, 1, 1, 0),
+    "spa": (5, 2, 2, 0),
+    "silverstone": (5, 3, 3, 0),
+    "hockenheimring": (4, 2, 2, 0),
+    "baku": (5, 2, 2, 1),
+    "jeddah": (5, 2, 3, 1),
+    "vegas": (5, 1, 1, 1),
+    "avus": (5, 1, 1, 0),
+    "reims": (5, 1, 1, 0),
+    "indianapolis": (4, 1, 1, 0),
+    "red_bull_ring": (4, 2, 2, 0),
+    "fuji": (4, 2, 2, 0),
+    "shanghai": (4, 3, 3, 0),
+    "bahrain": (4, 3, 3, 0),
+    "sepang": (4, 3, 3, 0),
+    "catalunya": (3, 4, 4, 0),
+    "suzuka": (4, 4, 5, 0),
+    "hungaroring": (2, 5, 5, 0),
+    "monaco": (1, 5, 5, 1),
+    "marina_bay": (2, 5, 5, 1),
+    "valencia": (3, 3, 3, 1),
+    "miami": (4, 2, 2, 1),
+    "las_vegas": (2, 2, 2, 1),
+    "detroit": (2, 4, 4, 1),
+    "phoenix": (2, 4, 4, 1),
+    "long_beach": (2, 4, 4, 1),
+    "dallas": (2, 4, 4, 1),
+    "adelaide": (2, 4, 4, 1),
+    "madring": (3, 3, 3, 1),
+    "zandvoort": (3, 5, 5, 0),
+    "imola": (3, 4, 4, 0),
+    "magny_cours": (3, 4, 4, 0),
+    "nurburgring": (3, 4, 4, 0),
+    "interlagos": (3, 4, 4, 0),
+    "yas_marina": (3, 3, 3, 0),
+    "rodriguez": (4, 3, 3, 0),
+    "americas": (3, 4, 4, 0),
+    "portimao": (3, 4, 4, 0),
+    "mugello": (4, 4, 4, 0),
+    "losail": (4, 4, 4, 0),
+}
 
 
 @dataclass
@@ -156,6 +246,55 @@ def _safe_numeric(dataframe: pd.DataFrame, columns: Iterable[str]) -> pd.DataFra
     return dataframe
 
 
+def _profile_bucket(value: object) -> int:
+    if pd.isna(value):
+        return 0
+    return int(value)
+
+
+def _circuit_profile_key(row: object) -> tuple[int, int, int]:
+    return (
+        _profile_bucket(getattr(row, "circuit_speed_score")),
+        _profile_bucket(getattr(row, "circuit_aero_load_score")),
+        _profile_bucket(getattr(row, "circuit_is_street")),
+    )
+
+
+def _add_circuit_profile_features(circuits: pd.DataFrame) -> pd.DataFrame:
+    circuits = circuits.copy()
+
+    profile_rows = []
+    for row in circuits.itertuples():
+        circuit_ref = str(getattr(row, "circuitRef", "")).strip('"')
+        speed, aero, corners, is_street = CIRCUIT_PROFILE_OVERRIDES.get(
+            circuit_ref,
+            (3, 3, 3, int("street" in circuit_ref.lower())),
+        )
+        profile_rows.append(
+            {
+                "circuitId": row.circuitId,
+                "circuit_speed_score": speed,
+                "circuit_aero_load_score": aero,
+                "circuit_corner_density_score": corners,
+                "circuit_is_street": is_street,
+            }
+        )
+
+    return circuits.merge(pd.DataFrame(profile_rows), on="circuitId", how="left")
+
+
+def _is_classified_finish(status_id: object) -> bool:
+    if pd.isna(status_id):
+        return False
+    return int(status_id) in CLASSIFIED_STATUS_IDS
+
+
+def _qualy_finish_delta(position_order: object, qualifying_position: object) -> float:
+    if pd.isna(position_order) or pd.isna(qualifying_position):
+        return np.nan
+    return float(position_order) - float(qualifying_position)
+
+
 def _best_qualifying_time(dataframe: pd.DataFrame) -> pd.Series:
     """Usa Q3 si existe; si no, Q2; si no, Q1."""
     return dataframe["q3_ms"].combine_first(dataframe["q2_ms"]).combine_first(
@@ -189,6 +328,7 @@ def build_base_dataset(datasets: dict[str, pd.DataFrame]) -> pd.DataFrame:
             "rank",
             "points",
             "positionOrder",
+            "statusId",
         ],
     )
 
@@ -196,10 +336,15 @@ def build_base_dataset(datasets: dict[str, pd.DataFrame]) -> pd.DataFrame:
     races["race_date"] = pd.to_datetime(races["date"], errors="coerce")
     races = races.drop(columns=["date"])
 
-    circuits = datasets["circuits"][["circuitId", "lat", "lng", "alt"]].rename(
+    circuits = datasets["circuits"][
+        ["circuitId", "circuitRef", "lat", "lng", "alt"]
+    ].rename(
         columns={"lat": "circuit_lat", "lng": "circuit_lng", "alt": "circuit_alt"}
     )
-    circuits = _safe_numeric(circuits, ["circuitId", "circuit_lat", "circuit_lng", "circuit_alt"])
+    circuits = _safe_numeric(
+        circuits, ["circuitId", "circuit_lat", "circuit_lng", "circuit_alt"]
+    )
+    circuits = _add_circuit_profile_features(circuits).drop(columns=["circuitRef"])
 
     qualifying = datasets["qualifying"][
         ["raceId", "driverId", "constructorId", "position", "q1", "q2", "q3"]
@@ -268,6 +413,13 @@ def _recent_rate(values: deque[float], window: int, threshold: int) -> float:
     return float(np.mean([value <= threshold for value in recent]))
 
 
+def _recent_boolean_rate(values: deque[float], window: int) -> float:
+    recent = list(values)[-window:]
+    if not recent:
+        return np.nan
+    return float(np.mean(recent))
+
+
 def _recent_driver_features(history: deque[float], prefix: str) -> dict[str, float]:
     features = {}
     for window in (3, 5, 10):
@@ -283,6 +435,22 @@ def _recent_driver_features(history: deque[float], prefix: str) -> dict[str, flo
     return features
 
 
+def _recent_outcome_features(
+    dnf_history: deque[float],
+    qualy_delta_history: deque[float],
+    prefix: str,
+) -> dict[str, float]:
+    features = {}
+    for window in (3, 5, 10):
+        features[f"{prefix}_last_{window}_dnf_rate"] = _recent_boolean_rate(
+            dnf_history, window
+        )
+        features[f"{prefix}_last_{window}_qualy_finish_delta"] = _recent_average(
+            qualy_delta_history, window
+        )
+    return features
+
+
 def _recent_constructor_features(history: deque[float]) -> dict[str, float]:
     features = {}
     for window in (3, 5, 10):
@@ -293,6 +461,37 @@ def _recent_constructor_features(history: deque[float]) -> dict[str, float]:
             history, window, 10
         )
     return features
+
+
+def _recent_constructor_pair_features(
+    avg_finish_history: deque[float],
+    best_finish_history: deque[float],
+    points_history: deque[float],
+    both_top10_history: deque[float],
+    double_dnf_history: deque[float],
+) -> dict[str, float]:
+    features = {}
+    for window in (3, 5):
+        features[f"constructor_pair_last_{window}_avg_finish_position"] = (
+            _recent_average(avg_finish_history, window)
+        )
+        features[f"constructor_pair_last_{window}_best_finish_position"] = (
+            _recent_average(best_finish_history, window)
+        )
+        features[f"constructor_pair_last_{window}_points"] = _recent_average(
+            points_history, window
+        )
+        features[f"constructor_pair_last_{window}_both_top10_rate"] = (
+            _recent_boolean_rate(both_top10_history, window)
+        )
+        features[f"constructor_pair_last_{window}_double_dnf_rate"] = (
+            _recent_boolean_rate(double_dnf_history, window)
+        )
+    return features
+
+
+def _rate_from_stats(stats: RunningStats) -> float:
+    return stats.mean
 
 
 def _lap_summaries(datasets: dict[str, pd.DataFrame]) -> pd.DataFrame:
@@ -358,8 +557,26 @@ def add_historical_features(
     lap_count_stats: dict[tuple[int, int], RunningStats] = {}
     driver_position_stats: dict[int, RunningStats] = {}
     driver_circuit_finish_stats: dict[tuple[int, int], RunningStats] = {}
+    driver_circuit_dnf_stats: dict[tuple[int, int], RunningStats] = {}
+    driver_similar_circuit_finish_stats: dict[tuple[int, tuple[int, int, int]], RunningStats] = {}
+    driver_similar_circuit_top10_stats: dict[tuple[int, tuple[int, int, int]], RunningStats] = {}
+    driver_similar_circuit_dnf_stats: dict[tuple[int, tuple[int, int, int]], RunningStats] = {}
     constructor_position_stats: dict[int, RunningStats] = {}
     constructor_circuit_finish_stats: dict[tuple[int, int], RunningStats] = {}
+    constructor_circuit_top10_stats: dict[tuple[int, int], RunningStats] = {}
+    constructor_circuit_dnf_stats: dict[tuple[int, int], RunningStats] = {}
+    constructor_similar_circuit_finish_stats: dict[tuple[int, tuple[int, int, int]], RunningStats] = {}
+    constructor_similar_circuit_top10_stats: dict[tuple[int, tuple[int, int, int]], RunningStats] = {}
+    constructor_similar_circuit_dnf_stats: dict[tuple[int, tuple[int, int, int]], RunningStats] = {}
+    constructor_speed_finish_stats: dict[tuple[int, int], RunningStats] = {}
+    constructor_speed_top10_stats: dict[tuple[int, int], RunningStats] = {}
+    constructor_speed_dnf_stats: dict[tuple[int, int], RunningStats] = {}
+    constructor_aero_finish_stats: dict[tuple[int, int], RunningStats] = {}
+    constructor_aero_top10_stats: dict[tuple[int, int], RunningStats] = {}
+    constructor_aero_dnf_stats: dict[tuple[int, int], RunningStats] = {}
+    constructor_street_finish_stats: dict[tuple[int, int], RunningStats] = {}
+    constructor_street_top10_stats: dict[tuple[int, int], RunningStats] = {}
+    constructor_street_dnf_stats: dict[tuple[int, int], RunningStats] = {}
 
     driver_latest_points: dict[int, float] = {}
     driver_latest_wins: dict[int, float] = {}
@@ -368,7 +585,16 @@ def add_historical_features(
     driver_circuit_wins: dict[tuple[int, int], int] = {}
     constructor_circuit_wins: dict[tuple[int, int], int] = {}
     driver_recent_finishes: dict[int, deque[float]] = {}
+    driver_recent_dnfs: dict[int, deque[float]] = {}
+    driver_recent_qualy_deltas: dict[int, deque[float]] = {}
     constructor_recent_finishes: dict[int, deque[float]] = {}
+    constructor_recent_dnfs: dict[int, deque[float]] = {}
+    constructor_recent_qualy_deltas: dict[int, deque[float]] = {}
+    constructor_pair_avg_finishes: dict[int, deque[float]] = {}
+    constructor_pair_best_finishes: dict[int, deque[float]] = {}
+    constructor_pair_points: dict[int, deque[float]] = {}
+    constructor_pair_both_top10: dict[int, deque[float]] = {}
+    constructor_pair_double_dnf: dict[int, deque[float]] = {}
     driver_season_points: dict[tuple[int, int], float] = {}
     constructor_season_points: dict[tuple[int, int], float] = {}
 
@@ -389,6 +615,21 @@ def add_historical_features(
             year = int(row.year)
             driver_circuit_key = (driver_id, circuit_id)
             constructor_circuit_key = (constructor_id, circuit_id)
+            circuit_profile_key = _circuit_profile_key(row)
+            driver_similar_circuit_key = (driver_id, circuit_profile_key)
+            constructor_similar_circuit_key = (constructor_id, circuit_profile_key)
+            constructor_speed_key = (
+                constructor_id,
+                _profile_bucket(row.circuit_speed_score),
+            )
+            constructor_aero_key = (
+                constructor_id,
+                _profile_bucket(row.circuit_aero_load_score),
+            )
+            constructor_street_key = (
+                constructor_id,
+                _profile_bucket(row.circuit_is_street),
+            )
             driver_season_key = (driver_id, year)
             constructor_season_key = (constructor_id, year)
 
@@ -405,11 +646,65 @@ def add_historical_features(
             driver_circuit_finish = driver_circuit_finish_stats.get(
                 driver_circuit_key, RunningStats()
             )
+            driver_circuit_dnf = driver_circuit_dnf_stats.get(
+                driver_circuit_key, RunningStats()
+            )
+            driver_similar_circuit_finish = driver_similar_circuit_finish_stats.get(
+                driver_similar_circuit_key, RunningStats()
+            )
+            driver_similar_circuit_top10 = driver_similar_circuit_top10_stats.get(
+                driver_similar_circuit_key, RunningStats()
+            )
+            driver_similar_circuit_dnf = driver_similar_circuit_dnf_stats.get(
+                driver_similar_circuit_key, RunningStats()
+            )
             constructor_pos = constructor_position_stats.get(
                 constructor_id, RunningStats()
             )
             constructor_circuit_finish = constructor_circuit_finish_stats.get(
                 constructor_circuit_key, RunningStats()
+            )
+            constructor_circuit_top10 = constructor_circuit_top10_stats.get(
+                constructor_circuit_key, RunningStats()
+            )
+            constructor_circuit_dnf = constructor_circuit_dnf_stats.get(
+                constructor_circuit_key, RunningStats()
+            )
+            constructor_similar_circuit_finish = constructor_similar_circuit_finish_stats.get(
+                constructor_similar_circuit_key, RunningStats()
+            )
+            constructor_similar_circuit_top10 = constructor_similar_circuit_top10_stats.get(
+                constructor_similar_circuit_key, RunningStats()
+            )
+            constructor_similar_circuit_dnf = constructor_similar_circuit_dnf_stats.get(
+                constructor_similar_circuit_key, RunningStats()
+            )
+            constructor_speed_finish = constructor_speed_finish_stats.get(
+                constructor_speed_key, RunningStats()
+            )
+            constructor_speed_top10 = constructor_speed_top10_stats.get(
+                constructor_speed_key, RunningStats()
+            )
+            constructor_speed_dnf = constructor_speed_dnf_stats.get(
+                constructor_speed_key, RunningStats()
+            )
+            constructor_aero_finish = constructor_aero_finish_stats.get(
+                constructor_aero_key, RunningStats()
+            )
+            constructor_aero_top10 = constructor_aero_top10_stats.get(
+                constructor_aero_key, RunningStats()
+            )
+            constructor_aero_dnf = constructor_aero_dnf_stats.get(
+                constructor_aero_key, RunningStats()
+            )
+            constructor_street_finish = constructor_street_finish_stats.get(
+                constructor_street_key, RunningStats()
+            )
+            constructor_street_top10 = constructor_street_top10_stats.get(
+                constructor_street_key, RunningStats()
+            )
+            constructor_street_dnf = constructor_street_dnf_stats.get(
+                constructor_street_key, RunningStats()
             )
 
             row_features = {
@@ -435,6 +730,16 @@ def add_historical_features(
                         driver_circuit_key, 0
                     ),
                     "driver_circuit_finish_position_mean_hist": driver_circuit_finish.mean,
+                    "driver_circuit_dnf_rate_hist": _rate_from_stats(driver_circuit_dnf),
+                    "driver_similar_circuit_finish_position_mean_hist": (
+                        driver_similar_circuit_finish.mean
+                    ),
+                    "driver_similar_circuit_top10_rate_hist": _rate_from_stats(
+                        driver_similar_circuit_top10
+                    ),
+                    "driver_similar_circuit_dnf_rate_hist": _rate_from_stats(
+                        driver_similar_circuit_dnf
+                    ),
                     "driver_season_points_before_race": driver_season_points.get(
                         driver_season_key, 0.0
                     ),
@@ -449,8 +754,50 @@ def add_historical_features(
                     "constructor_circuit_wins_hist": constructor_circuit_wins.get(
                         constructor_circuit_key, 0
                     ),
+                    "constructor_circuit_top10_rate_hist": _rate_from_stats(
+                        constructor_circuit_top10
+                    ),
+                    "constructor_circuit_dnf_rate_hist": _rate_from_stats(
+                        constructor_circuit_dnf
+                    ),
                     "constructor_season_points_before_race": constructor_season_points.get(
                         constructor_season_key, 0.0
+                    ),
+                    "constructor_similar_circuit_finish_position_mean_hist": (
+                        constructor_similar_circuit_finish.mean
+                    ),
+                    "constructor_similar_circuit_top10_rate_hist": _rate_from_stats(
+                        constructor_similar_circuit_top10
+                    ),
+                    "constructor_similar_circuit_dnf_rate_hist": _rate_from_stats(
+                        constructor_similar_circuit_dnf
+                    ),
+                    "constructor_speed_profile_finish_position_mean_hist": (
+                        constructor_speed_finish.mean
+                    ),
+                    "constructor_speed_profile_top10_rate_hist": _rate_from_stats(
+                        constructor_speed_top10
+                    ),
+                    "constructor_speed_profile_dnf_rate_hist": _rate_from_stats(
+                        constructor_speed_dnf
+                    ),
+                    "constructor_aero_profile_finish_position_mean_hist": (
+                        constructor_aero_finish.mean
+                    ),
+                    "constructor_aero_profile_top10_rate_hist": _rate_from_stats(
+                        constructor_aero_top10
+                    ),
+                    "constructor_aero_profile_dnf_rate_hist": _rate_from_stats(
+                        constructor_aero_dnf
+                    ),
+                    "constructor_street_finish_position_mean_hist": (
+                        constructor_street_finish.mean
+                    ),
+                    "constructor_street_top10_rate_hist": _rate_from_stats(
+                        constructor_street_top10
+                    ),
+                    "constructor_street_dnf_rate_hist": _rate_from_stats(
+                        constructor_street_dnf
                     ),
                 }
             row_features.update(
@@ -460,8 +807,33 @@ def add_historical_features(
                 )
             )
             row_features.update(
+                _recent_outcome_features(
+                    driver_recent_dnfs.get(driver_id, deque(maxlen=10)),
+                    driver_recent_qualy_deltas.get(driver_id, deque(maxlen=10)),
+                    "driver",
+                )
+            )
+            row_features.update(
                 _recent_constructor_features(
                     constructor_recent_finishes.get(constructor_id, deque(maxlen=20))
+                )
+            )
+            row_features.update(
+                _recent_outcome_features(
+                    constructor_recent_dnfs.get(constructor_id, deque(maxlen=20)),
+                    constructor_recent_qualy_deltas.get(
+                        constructor_id, deque(maxlen=20)
+                    ),
+                    "constructor",
+                )
+            )
+            row_features.update(
+                _recent_constructor_pair_features(
+                    constructor_pair_avg_finishes.get(constructor_id, deque(maxlen=5)),
+                    constructor_pair_best_finishes.get(constructor_id, deque(maxlen=5)),
+                    constructor_pair_points.get(constructor_id, deque(maxlen=5)),
+                    constructor_pair_both_top10.get(constructor_id, deque(maxlen=5)),
+                    constructor_pair_double_dnf.get(constructor_id, deque(maxlen=5)),
                 )
             )
             feature_rows.append(row_features)
@@ -501,12 +873,84 @@ def add_historical_features(
             driver_id = int(row.driverId)
             constructor_id = int(row.constructorId)
             year = int(row.year)
+            circuit_profile_key = _circuit_profile_key(row)
+            driver_similar_key = (driver_id, circuit_profile_key)
+            constructor_similar_key = (constructor_id, circuit_profile_key)
+            constructor_speed_key = (
+                constructor_id,
+                _profile_bucket(row.circuit_speed_score),
+            )
+            constructor_aero_key = (
+                constructor_id,
+                _profile_bucket(row.circuit_aero_load_score),
+            )
+            constructor_street_key = (
+                constructor_id,
+                _profile_bucket(row.circuit_is_street),
+            )
+            dnf_value = 0.0 if _is_classified_finish(row.statusId) else 1.0
+            top10_value = 1.0 if row.positionOrder <= 10 else 0.0
+            qualy_delta = _qualy_finish_delta(row.positionOrder, row.qualifying_position)
             driver_circuit_finish_stats.setdefault(driver_key, RunningStats()).add(
                 row.positionOrder
             )
+            driver_circuit_dnf_stats.setdefault(driver_key, RunningStats()).add(
+                dnf_value
+            )
+            driver_similar_circuit_finish_stats.setdefault(
+                driver_similar_key, RunningStats()
+            ).add(row.positionOrder)
+            driver_similar_circuit_top10_stats.setdefault(
+                driver_similar_key, RunningStats()
+            ).add(top10_value)
+            driver_similar_circuit_dnf_stats.setdefault(
+                driver_similar_key, RunningStats()
+            ).add(dnf_value)
             constructor_circuit_finish_stats.setdefault(constructor_key, RunningStats()).add(
                 row.positionOrder
             )
+            constructor_circuit_top10_stats.setdefault(
+                constructor_key, RunningStats()
+            ).add(top10_value)
+            constructor_circuit_dnf_stats.setdefault(
+                constructor_key, RunningStats()
+            ).add(dnf_value)
+            constructor_similar_circuit_finish_stats.setdefault(
+                constructor_similar_key, RunningStats()
+            ).add(row.positionOrder)
+            constructor_similar_circuit_top10_stats.setdefault(
+                constructor_similar_key, RunningStats()
+            ).add(top10_value)
+            constructor_similar_circuit_dnf_stats.setdefault(
+                constructor_similar_key, RunningStats()
+            ).add(dnf_value)
+            constructor_speed_finish_stats.setdefault(
+                constructor_speed_key, RunningStats()
+            ).add(row.positionOrder)
+            constructor_speed_top10_stats.setdefault(
+                constructor_speed_key, RunningStats()
+            ).add(top10_value)
+            constructor_speed_dnf_stats.setdefault(
+                constructor_speed_key, RunningStats()
+            ).add(dnf_value)
+            constructor_aero_finish_stats.setdefault(
+                constructor_aero_key, RunningStats()
+            ).add(row.positionOrder)
+            constructor_aero_top10_stats.setdefault(
+                constructor_aero_key, RunningStats()
+            ).add(top10_value)
+            constructor_aero_dnf_stats.setdefault(
+                constructor_aero_key, RunningStats()
+            ).add(dnf_value)
+            constructor_street_finish_stats.setdefault(
+                constructor_street_key, RunningStats()
+            ).add(row.positionOrder)
+            constructor_street_top10_stats.setdefault(
+                constructor_street_key, RunningStats()
+            ).add(top10_value)
+            constructor_street_dnf_stats.setdefault(
+                constructor_street_key, RunningStats()
+            ).add(dnf_value)
             if row.positionOrder == 1:
                 driver_circuit_wins[driver_key] = driver_circuit_wins.get(driver_key, 0) + 1
                 constructor_circuit_wins[constructor_key] = (
@@ -515,9 +959,19 @@ def add_historical_features(
             driver_recent_finishes.setdefault(driver_id, deque(maxlen=10)).append(
                 row.positionOrder
             )
+            driver_recent_dnfs.setdefault(driver_id, deque(maxlen=10)).append(dnf_value)
+            driver_recent_qualy_deltas.setdefault(driver_id, deque(maxlen=10)).append(
+                qualy_delta
+            )
             constructor_recent_finishes.setdefault(
                 constructor_id, deque(maxlen=20)
             ).append(row.positionOrder)
+            constructor_recent_dnfs.setdefault(
+                constructor_id, deque(maxlen=20)
+            ).append(dnf_value)
+            constructor_recent_qualy_deltas.setdefault(
+                constructor_id, deque(maxlen=20)
+            ).append(qualy_delta)
             driver_season_key = (driver_id, year)
             constructor_season_key = (constructor_id, year)
             points = 0.0 if pd.isna(row.points) else float(row.points)
@@ -527,6 +981,30 @@ def add_historical_features(
             constructor_season_points[constructor_season_key] = (
                 constructor_season_points.get(constructor_season_key, 0.0) + points
             )
+
+        for constructor_id, constructor_rows in race_rows.groupby("constructorId"):
+            constructor_id = int(constructor_id)
+            finish_positions = constructor_rows["positionOrder"].astype(float)
+            points = constructor_rows["points"].fillna(0.0).astype(float)
+            dnf_values = constructor_rows["statusId"].map(
+                lambda value: 0.0 if _is_classified_finish(value) else 1.0
+            )
+
+            constructor_pair_avg_finishes.setdefault(
+                constructor_id, deque(maxlen=5)
+            ).append(float(finish_positions.mean()))
+            constructor_pair_best_finishes.setdefault(
+                constructor_id, deque(maxlen=5)
+            ).append(float(finish_positions.min()))
+            constructor_pair_points.setdefault(constructor_id, deque(maxlen=5)).append(
+                float(points.sum())
+            )
+            constructor_pair_both_top10.setdefault(
+                constructor_id, deque(maxlen=5)
+            ).append(float((finish_positions <= 10).all()))
+            constructor_pair_double_dnf.setdefault(
+                constructor_id, deque(maxlen=5)
+            ).append(float((dnf_values == 1.0).all()))
 
     history = pd.DataFrame(feature_rows)
     featured = featured.merge(history, on=["raceId", "driverId"], how="left", validate="one_to_one")

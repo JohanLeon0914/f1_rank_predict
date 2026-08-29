@@ -13,53 +13,58 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from f1_ranker.config import MODEL_DIR
-from f1_ranker.inference import predict_race_ranking
+from f1_ranker.inference import predict_race_ranking_with_analysis
 
 
 class ParticipantRequest(BaseModel):
     """Datos disponibles antes de una carrera para un piloto."""
 
-    driverId: int = Field(..., description="Identificador del piloto.")
-    constructorId: int = Field(..., description="Identificador del constructor/equipo.")
-    grid: int | float | None = Field(None, description="Posicion de largada.")
-    qualifying_position: int | float | None = Field(None, description="Posicion de clasificacion.")
-    q1: str | float | None = Field(None, description="Tiempo Q1 en formato M:SS.mmm.")
-    q2: str | float | None = Field(None, description="Tiempo Q2 en formato M:SS.mmm.")
-    q3: str | float | None = Field(None, description="Tiempo Q3 en formato M:SS.mmm.")
+    driverId: int = Field(..., description="Driver identifier.")
+    constructorId: int = Field(..., description="Constructor/team identifier.")
+    grid: int | float | None = Field(None, description="Starting grid position.")
+    qualifying_position: int | float | None = Field(None, description="Qualifying position.")
+    q1: str | float | None = Field(None, description="Q1 lap time in M:SS.mmm format.")
+    q2: str | float | None = Field(None, description="Q2 lap time in M:SS.mmm format.")
+    q3: str | float | None = Field(None, description="Q3 lap time in M:SS.mmm format.")
 
 
 class PredictionRequest(BaseModel):
     """Contrato de entrada para predecir el ranking de una carrera."""
 
-    race_id: int = Field(..., description="Identificador de la carrera a predecir.")
-    circuit_id: int = Field(..., description="Identificador del circuito.")
+    race_id: int = Field(..., description="Race identifier to predict.")
+    circuit_id: int = Field(..., description="Circuit identifier.")
     race_date: str | None = Field(
         None,
-        description="Fecha YYYY-MM-DD. Obligatoria si race_id no existe en races.csv.",
+        description="YYYY-MM-DD date. Required when race_id does not exist in races.csv.",
     )
     participants: list[ParticipantRequest] = Field(
         ...,
         min_length=2,
-        description="Pilotos que participan en la carrera.",
+        description="Drivers participating in the race.",
     )
 
 
 class PredictionItem(BaseModel):
     predicted_position: int
     driverId: int
+    constructorId: int
     score: float
+    analysis: dict[str, Any]
 
 
 class PredictionResponse(BaseModel):
     race_id: int
     circuit_id: int
+    race_date: str | None
+    dashboard_analysis: dict[str, Any]
+    analysis_summary: dict[str, Any]
     predictions: list[PredictionItem]
 
 
 app = FastAPI(
     title="F1 Ranker API",
     version="1.0.0",
-    description="API para predecir el ranking de una carrera de Formula 1.",
+    description="API for predicting a Formula 1 race ranking.",
 )
 
 
@@ -116,7 +121,7 @@ def predict(request: PredictionRequest) -> PredictionResponse:
     participants = pd.DataFrame([participant.model_dump() for participant in request.participants])
 
     try:
-        prediction = predict_race_ranking(
+        prediction = predict_race_ranking_with_analysis(
             race_id=request.race_id,
             circuit_id=request.circuit_id,
             participants=participants,
@@ -125,16 +130,4 @@ def predict(request: PredictionRequest) -> PredictionResponse:
     except (FileNotFoundError, ValueError, KeyError) as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
-    items = [
-        PredictionItem(
-            predicted_position=int(row["Posicion Predicha"]),
-            driverId=int(row["DriverId"]),
-            score=float(row["Score"]),
-        )
-        for _, row in prediction.iterrows()
-    ]
-    return PredictionResponse(
-        race_id=request.race_id,
-        circuit_id=request.circuit_id,
-        predictions=items,
-    )
+    return PredictionResponse(**_json_safe(prediction))
