@@ -118,3 +118,87 @@ Respuesta:
   ]
 }
 ```
+
+## Ejecutar con Docker
+
+Construye y ejecuta la API localmente desde la raíz del proyecto:
+
+```bash
+docker build -t f1-ranker-api:local .
+docker run --rm -p 8080:8080 f1-ranker-api:local
+```
+
+Verifica que el modelo esté disponible en `http://localhost:8080/health`.
+
+## Desplegar la API en Google Cloud Run
+
+Este flujo usa Cloud Build para construir la imagen sin necesitar Docker local y
+Artifact Registry para almacenarla.
+
+1. Instala Google Cloud CLI, inicia sesión y selecciona el proyecto:
+
+```bash
+gcloud auth login
+gcloud auth configure-docker REGION-docker.pkg.dev
+gcloud config set project PROJECT_ID
+```
+
+2. Define variables en tu terminal, reemplazando los valores de ejemplo:
+
+```bash
+PROJECT_ID="mi-proyecto"
+REGION="us-central1"
+REPOSITORY="f1-images"
+SERVICE="f1-ranker-api"
+IMAGE="${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${SERVICE}:v1"
+```
+
+En PowerShell, usa `$env:PROJECT_ID`, `$env:REGION`, etc., o reemplaza los
+valores directamente en los comandos siguientes.
+
+3. Habilita las APIs y crea el repositorio de imágenes una sola vez:
+
+```bash
+gcloud services enable run.googleapis.com cloudbuild.googleapis.com artifactregistry.googleapis.com
+gcloud artifacts repositories create "$REPOSITORY" \
+  --repository-format=docker \
+  --location="$REGION" \
+  --description="Imágenes de la API F1 Ranker"
+```
+
+4. Desde la raíz del repositorio, construye y publica la imagen:
+
+```bash
+gcloud builds submit --tag "$IMAGE" .
+```
+
+5. Despliega el contenedor en Cloud Run. `--allow-unauthenticated` hace que la
+API acepte peticiones públicas; omítelo si usarás autenticación IAM:
+
+```bash
+gcloud run deploy "$SERVICE" \
+  --image "$IMAGE" \
+  --region "$REGION" \
+  --platform managed \
+  --port 8080 \
+  --memory 1Gi \
+  --cpu 1 \
+  --min 0 \
+  --max 3 \
+  --allow-unauthenticated
+```
+
+6. Obtén la URL y comprueba la API:
+
+```bash
+URL=$(gcloud run services describe "$SERVICE" \
+  --region "$REGION" \
+  --format="value(status.url)")
+curl "$URL/health"
+curl "$URL/metrics"
+```
+
+Para predecir, envía un `POST` a `$URL/predict` con el JSON del contrato
+mostrado arriba. La primera petición puede tardar un poco mientras Cloud Run
+inicia el contenedor. El modelo y los CSV quedan incluidos en la imagen, por lo
+que no hace falta montar un disco ni configurar una base de datos.

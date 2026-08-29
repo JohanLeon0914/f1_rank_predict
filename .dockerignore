@@ -1,0 +1,14 @@
+.git
+.gitignore
+.cursor
+.venv
+__pycache__
+*.py[cod]
+*.egg-info
+reports
+scripts
+f1_ml_inicio.py
+railway.json
+README.md
+.dockerignore
+Dockerfile
