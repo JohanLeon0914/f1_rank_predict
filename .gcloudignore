@@ -1,0 +1,13 @@
+.git
+.gitignore
+.cursor
+.agents
+.codex
+.venv
+.venv-linux
+.uv-cache
+__pycache__
+*.py[cod]
+*.egg-info
+reports/results_duplicate_participants_report.csv
+reports/results_duplicate_participants_rows.csv

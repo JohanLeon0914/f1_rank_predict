@@ -2,6 +2,8 @@
 .gitignore
 .cursor
 .venv
+.venv-linux
+.uv-cache
 __pycache__
 *.py[cod]
 *.egg-info
