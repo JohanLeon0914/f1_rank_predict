@@ -71,4 +71,16 @@ DATASET_SPECS = {
         filename="circuits.csv",
         required_columns=("circuitId", "lat", "lng", "alt"),
     ),
+    "sprint_results": DatasetSpec(
+        filename="sprint_results.csv",
+        required_columns=(
+            "raceId",
+            "driverId",
+            "constructorId",
+            "grid",
+            "positionOrder",
+            "points",
+            "statusId",
+        ),
+    ),
 }

@@ -128,6 +128,26 @@ MODEL_FEATURE_COLUMNS = [
     "constructor_pair_last_5_both_top10_rate",
     "constructor_pair_last_3_double_dnf_rate",
     "constructor_pair_last_5_double_dnf_rate",
+    "constructor_sprint_dnf_rate_hist",
+    "constructor_sprint_finish_position_mean_hist",
+    "constructor_sprint_last_3_avg_finish_position",
+    "constructor_sprint_last_3_points",
+    "constructor_sprint_last_3_top3_rate",
+    "constructor_sprint_last_3_top8_rate",
+    "constructor_sprint_points_mean_hist",
+    "constructor_sprint_start_count_hist",
+    "constructor_sprint_top3_rate_hist",
+    "constructor_sprint_top8_rate_hist",
+    "driver_sprint_dnf_rate_hist",
+    "driver_sprint_finish_position_mean_hist",
+    "driver_sprint_last_3_avg_finish_position",
+    "driver_sprint_last_3_points",
+    "driver_sprint_last_3_top3_rate",
+    "driver_sprint_last_3_top8_rate",
+    "driver_sprint_points_mean_hist",
+    "driver_sprint_start_count_hist",
+    "driver_sprint_top3_rate_hist",
+    "driver_sprint_top8_rate_hist",
 ]
 
 CATEGORICAL_FEATURES = ["circuitId"]
@@ -179,7 +199,6 @@ CIRCUIT_PROFILE_OVERRIDES = {
     "mugello": (4, 4, 4, 0),
     "losail": (4, 4, 4, 0),
 }
-
 
 @dataclass
 class RunningStats:
@@ -490,6 +509,21 @@ def _recent_constructor_pair_features(
     return features
 
 
+def _recent_sprint_features(
+    finish_history: deque[float],
+    points_history: deque[float],
+    prefix: str,
+) -> dict[str, float]:
+    return {
+        f"{prefix}_sprint_last_3_avg_finish_position": _recent_average(
+            finish_history, 3
+        ),
+        f"{prefix}_sprint_last_3_top3_rate": _recent_rate(finish_history, 3, 3),
+        f"{prefix}_sprint_last_3_top8_rate": _recent_rate(finish_history, 3, 8),
+        f"{prefix}_sprint_last_3_points": _recent_average(points_history, 3),
+    }
+
+
 def _rate_from_stats(stats: RunningStats) -> float:
     return stats.mean
 
@@ -514,6 +548,31 @@ def _lap_summaries(datasets: dict[str, pd.DataFrame]) -> pd.DataFrame:
     return summary
 
 
+def _sprint_summaries(datasets: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    sprint_results = datasets["sprint_results"][
+        [
+            "raceId",
+            "driverId",
+            "constructorId",
+            "positionOrder",
+            "points",
+            "statusId",
+        ]
+    ].copy()
+    sprint_results = _safe_numeric(
+        sprint_results,
+        [
+            "raceId",
+            "driverId",
+            "constructorId",
+            "positionOrder",
+            "points",
+            "statusId",
+        ],
+    )
+    return sprint_results
+
+
 def add_historical_features(
     base: pd.DataFrame,
     datasets: dict[str, pd.DataFrame],
@@ -523,6 +582,9 @@ def add_historical_features(
 
     pit_by_race = {race_id: rows for race_id, rows in _pit_summaries(datasets).groupby("raceId")}
     lap_by_race = {race_id: rows for race_id, rows in _lap_summaries(datasets).groupby("raceId")}
+    sprint_by_race = {
+        race_id: rows for race_id, rows in _sprint_summaries(datasets).groupby("raceId")
+    }
 
     driver_standings = _safe_numeric(
         datasets["driver_standings"][["raceId", "driverId", "points", "position", "wins"]].copy(),
@@ -577,6 +639,16 @@ def add_historical_features(
     constructor_street_finish_stats: dict[tuple[int, int], RunningStats] = {}
     constructor_street_top10_stats: dict[tuple[int, int], RunningStats] = {}
     constructor_street_dnf_stats: dict[tuple[int, int], RunningStats] = {}
+    driver_sprint_finish_stats: dict[int, RunningStats] = {}
+    driver_sprint_points_stats: dict[int, RunningStats] = {}
+    driver_sprint_top3_stats: dict[int, RunningStats] = {}
+    driver_sprint_top8_stats: dict[int, RunningStats] = {}
+    driver_sprint_dnf_stats: dict[int, RunningStats] = {}
+    constructor_sprint_finish_stats: dict[int, RunningStats] = {}
+    constructor_sprint_points_stats: dict[int, RunningStats] = {}
+    constructor_sprint_top3_stats: dict[int, RunningStats] = {}
+    constructor_sprint_top8_stats: dict[int, RunningStats] = {}
+    constructor_sprint_dnf_stats: dict[int, RunningStats] = {}
 
     driver_latest_points: dict[int, float] = {}
     driver_latest_wins: dict[int, float] = {}
@@ -590,6 +662,10 @@ def add_historical_features(
     constructor_recent_finishes: dict[int, deque[float]] = {}
     constructor_recent_dnfs: dict[int, deque[float]] = {}
     constructor_recent_qualy_deltas: dict[int, deque[float]] = {}
+    driver_recent_sprint_finishes: dict[int, deque[float]] = {}
+    driver_recent_sprint_points: dict[int, deque[float]] = {}
+    constructor_recent_sprint_finishes: dict[int, deque[float]] = {}
+    constructor_recent_sprint_points: dict[int, deque[float]] = {}
     constructor_pair_avg_finishes: dict[int, deque[float]] = {}
     constructor_pair_best_finishes: dict[int, deque[float]] = {}
     constructor_pair_points: dict[int, deque[float]] = {}
@@ -706,6 +782,34 @@ def add_historical_features(
             constructor_street_dnf = constructor_street_dnf_stats.get(
                 constructor_street_key, RunningStats()
             )
+            driver_sprint_finish = driver_sprint_finish_stats.get(
+                driver_id, RunningStats()
+            )
+            driver_sprint_points = driver_sprint_points_stats.get(
+                driver_id, RunningStats()
+            )
+            driver_sprint_top3 = driver_sprint_top3_stats.get(
+                driver_id, RunningStats()
+            )
+            driver_sprint_top8 = driver_sprint_top8_stats.get(
+                driver_id, RunningStats()
+            )
+            driver_sprint_dnf = driver_sprint_dnf_stats.get(driver_id, RunningStats())
+            constructor_sprint_finish = constructor_sprint_finish_stats.get(
+                constructor_id, RunningStats()
+            )
+            constructor_sprint_points = constructor_sprint_points_stats.get(
+                constructor_id, RunningStats()
+            )
+            constructor_sprint_top3 = constructor_sprint_top3_stats.get(
+                constructor_id, RunningStats()
+            )
+            constructor_sprint_top8 = constructor_sprint_top8_stats.get(
+                constructor_id, RunningStats()
+            )
+            constructor_sprint_dnf = constructor_sprint_dnf_stats.get(
+                constructor_id, RunningStats()
+            )
 
             row_features = {
                     "raceId": race_id,
@@ -723,6 +827,16 @@ def add_historical_features(
                     "driver_circuit_worst_lap_hist": lap_worst.maximum,
                     "driver_circuit_lap_time_std_hist": lap_std.mean,
                     "driver_circuit_laps_completed_mean_hist": lap_count.mean,
+                    "driver_sprint_start_count_hist": driver_sprint_finish.count,
+                    "driver_sprint_finish_position_mean_hist": driver_sprint_finish.mean,
+                    "driver_sprint_points_mean_hist": driver_sprint_points.mean,
+                    "driver_sprint_top3_rate_hist": _rate_from_stats(
+                        driver_sprint_top3
+                    ),
+                    "driver_sprint_top8_rate_hist": _rate_from_stats(
+                        driver_sprint_top8
+                    ),
+                    "driver_sprint_dnf_rate_hist": _rate_from_stats(driver_sprint_dnf),
                     "driver_points_prev": driver_latest_points.get(driver_id, np.nan),
                     "driver_wins_prev": driver_latest_wins.get(driver_id, np.nan),
                     "driver_championship_position_mean_hist": driver_pos.mean,
@@ -759,6 +873,22 @@ def add_historical_features(
                     ),
                     "constructor_circuit_dnf_rate_hist": _rate_from_stats(
                         constructor_circuit_dnf
+                    ),
+                    "constructor_sprint_start_count_hist": (
+                        constructor_sprint_finish.count
+                    ),
+                    "constructor_sprint_finish_position_mean_hist": (
+                        constructor_sprint_finish.mean
+                    ),
+                    "constructor_sprint_points_mean_hist": constructor_sprint_points.mean,
+                    "constructor_sprint_top3_rate_hist": _rate_from_stats(
+                        constructor_sprint_top3
+                    ),
+                    "constructor_sprint_top8_rate_hist": _rate_from_stats(
+                        constructor_sprint_top8
+                    ),
+                    "constructor_sprint_dnf_rate_hist": _rate_from_stats(
+                        constructor_sprint_dnf
                     ),
                     "constructor_season_points_before_race": constructor_season_points.get(
                         constructor_season_key, 0.0
@@ -823,6 +953,24 @@ def add_historical_features(
                     constructor_recent_dnfs.get(constructor_id, deque(maxlen=20)),
                     constructor_recent_qualy_deltas.get(
                         constructor_id, deque(maxlen=20)
+                    ),
+                    "constructor",
+                )
+            )
+            row_features.update(
+                _recent_sprint_features(
+                    driver_recent_sprint_finishes.get(driver_id, deque(maxlen=3)),
+                    driver_recent_sprint_points.get(driver_id, deque(maxlen=3)),
+                    "driver",
+                )
+            )
+            row_features.update(
+                _recent_sprint_features(
+                    constructor_recent_sprint_finishes.get(
+                        constructor_id, deque(maxlen=3)
+                    ),
+                    constructor_recent_sprint_points.get(
+                        constructor_id, deque(maxlen=3)
                     ),
                     "constructor",
                 )
@@ -981,6 +1129,59 @@ def add_historical_features(
             constructor_season_points[constructor_season_key] = (
                 constructor_season_points.get(constructor_season_key, 0.0) + points
             )
+
+        for row in sprint_by_race.get(race_id, pd.DataFrame()).itertuples():
+            driver_id = int(row.driverId)
+            constructor_id = int(row.constructorId)
+            finish_position = row.positionOrder
+            if pd.isna(finish_position):
+                continue
+            sprint_points = 0.0 if pd.isna(row.points) else float(row.points)
+            dnf_value = 0.0 if _is_classified_finish(row.statusId) else 1.0
+
+            driver_sprint_finish_stats.setdefault(
+                driver_id, RunningStats()
+            ).add(finish_position)
+            driver_sprint_points_stats.setdefault(
+                driver_id, RunningStats()
+            ).add(sprint_points)
+            driver_sprint_top3_stats.setdefault(driver_id, RunningStats()).add(
+                1.0 if finish_position <= 3 else 0.0
+            )
+            driver_sprint_top8_stats.setdefault(driver_id, RunningStats()).add(
+                1.0 if finish_position <= 8 else 0.0
+            )
+            driver_sprint_dnf_stats.setdefault(driver_id, RunningStats()).add(
+                dnf_value
+            )
+            constructor_sprint_finish_stats.setdefault(
+                constructor_id, RunningStats()
+            ).add(finish_position)
+            constructor_sprint_points_stats.setdefault(
+                constructor_id, RunningStats()
+            ).add(sprint_points)
+            constructor_sprint_top3_stats.setdefault(
+                constructor_id, RunningStats()
+            ).add(1.0 if finish_position <= 3 else 0.0)
+            constructor_sprint_top8_stats.setdefault(
+                constructor_id, RunningStats()
+            ).add(1.0 if finish_position <= 8 else 0.0)
+            constructor_sprint_dnf_stats.setdefault(
+                constructor_id, RunningStats()
+            ).add(dnf_value)
+
+            driver_recent_sprint_finishes.setdefault(
+                driver_id, deque(maxlen=3)
+            ).append(finish_position)
+            driver_recent_sprint_points.setdefault(
+                driver_id, deque(maxlen=3)
+            ).append(sprint_points)
+            constructor_recent_sprint_finishes.setdefault(
+                constructor_id, deque(maxlen=3)
+            ).append(finish_position)
+            constructor_recent_sprint_points.setdefault(
+                constructor_id, deque(maxlen=3)
+            ).append(sprint_points)
 
         for constructor_id, constructor_rows in race_rows.groupby("constructorId"):
             constructor_id = int(constructor_id)

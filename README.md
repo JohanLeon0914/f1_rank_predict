@@ -21,8 +21,8 @@ Metricas actuales del ultimo reentrenamiento:
 
 | Split | NDCG | Spearman | Kendall tau | MAE posicion | Top 1 | Top 3 | Top 10 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| validation | 0.9461 | 0.6484 | 0.5205 | 3.8266 | 0.4770 | 0.6379 | 0.7649 |
-| test | 0.9480 | 0.6477 | 0.5185 | 3.4366 | 0.5115 | 0.6686 | 0.7770 |
+| validation | 0.9473 | 0.6531 | 0.5282 | 3.7870 | 0.5172 | 0.6437 | 0.7644 |
+| test | 0.9505 | 0.6565 | 0.5320 | 3.3591 | 0.5517 | 0.6858 | 0.7787 |
 
 ## Prediccion por script
 
