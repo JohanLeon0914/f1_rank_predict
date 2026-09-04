@@ -14,6 +14,8 @@ from pydantic import BaseModel, Field
 
 from f1_ranker.config import MODEL_DIR
 from f1_ranker.inference import predict_race_ranking_with_analysis
+from ufc_predictor.config import UFC_MODEL_DIR
+from ufc_predictor.inference import predict_fight_winner
 
 
 class ParticipantRequest(BaseModel):
@@ -61,10 +63,34 @@ class PredictionResponse(BaseModel):
     predictions: list[PredictionItem]
 
 
+class UFCFightPredictionRequest(BaseModel):
+    """Contrato de entrada para predecir el ganador de una pelea UFC."""
+
+    red_fighter_id: str = Field(..., description="UFC fighter_id for the red-side fighter.")
+    blue_fighter_id: str = Field(..., description="UFC fighter_id for the blue-side fighter.")
+    fight_date: str | None = Field(
+        None,
+        description="YYYY-MM-DD. If omitted, the day after the latest historical event is used.",
+    )
+    weight_class: str | None = Field(
+        None,
+        description="Optional weight class. If omitted, it is inferred from fighter history.",
+    )
+    title_fight: bool = Field(False, description="Whether the matchup is a title fight.")
+
+
+class UFCFightPredictionResponse(BaseModel):
+    prediction: dict[str, Any]
+    fight: dict[str, Any]
+    fighters: dict[str, Any]
+    head_to_head: dict[str, Any]
+    analysis: dict[str, Any]
+
+
 app = FastAPI(
-    title="F1 Ranker API",
-    version="1.0.0",
-    description="API for predicting a Formula 1 race ranking.",
+    title="F1 Ranker and UFC Predictor API",
+    version="1.1.0",
+    description="API for predicting a Formula 1 race ranking and UFC fight winners.",
 )
 
 
@@ -106,6 +132,20 @@ def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
+@app.get("/ufc/health")
+def ufc_health() -> dict[str, str]:
+    """Verifica que los artefactos minimos del modelo UFC existan."""
+    required_files = [
+        UFC_MODEL_DIR / "ufc_winner_xgb.json",
+        UFC_MODEL_DIR / "ufc_feature_artifacts.joblib",
+        UFC_MODEL_DIR / "ufc_metrics.joblib",
+    ]
+    missing = [str(path) for path in required_files if not path.exists()]
+    if missing:
+        raise HTTPException(status_code=503, detail={"missing_files": missing})
+    return {"status": "ok"}
+
+
 @app.get("/metrics")
 def metrics() -> dict[str, Any]:
     """Devuelve las metricas guardadas del ultimo entrenamiento."""
@@ -113,6 +153,15 @@ def metrics() -> dict[str, Any]:
         return _load_metrics()
     except FileNotFoundError as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+
+@app.get("/ufc/metrics")
+def ufc_metrics() -> dict[str, Any]:
+    """Devuelve las metricas guardadas del modelo UFC."""
+    metrics_path = UFC_MODEL_DIR / "ufc_metrics.joblib"
+    if not metrics_path.exists():
+        raise HTTPException(status_code=503, detail=f"No existen metricas UFC en {metrics_path}")
+    return joblib.load(metrics_path)
 
 
 @app.post("/predict", response_model=PredictionResponse)
@@ -131,3 +180,20 @@ def predict(request: PredictionRequest) -> PredictionResponse:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
     return PredictionResponse(**_json_safe(prediction))
+
+
+@app.post("/ufc/predict-fight", response_model=UFCFightPredictionResponse)
+def predict_ufc_fight(request: UFCFightPredictionRequest) -> UFCFightPredictionResponse:
+    """Predice el ganador de una pelea UFC y devuelve estadisticas explicativas."""
+    try:
+        prediction = predict_fight_winner(
+            red_fighter_id=request.red_fighter_id,
+            blue_fighter_id=request.blue_fighter_id,
+            fight_date=request.fight_date,
+            weight_class=request.weight_class,
+            title_fight=request.title_fight,
+        )
+    except (FileNotFoundError, ValueError, KeyError) as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    return UFCFightPredictionResponse(**_json_safe(prediction))

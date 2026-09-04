@@ -1,0 +1,641 @@
+original_feature,importance,importance_pct
+red_last_10_avg_sig_landed_against,0.03524128,0.035241283
+red_career_avg_sig_landed_against,0.011064388,0.011064389
+red_last_3_avg_ctrl_seconds_against,0.010988307,0.010988308
+blue_last_10_avg_sig_landed_for,0.009569501,0.0095695015
+blue_reach_inches,0.0076255254,0.007625526
+blue_career_avg_sig_attempted_for,0.006655834,0.0066558346
+diff_age_years,0.006622431,0.0066224313
+red_last_10_avg_win,0.0065808264,0.006580827
+diff_last_3_avg_ctrl_seconds_for,0.006493975,0.0064939754
+red_career_avg_ctrl_seconds_against,0.0061953356,0.006195336
+red_career_win_rate,0.005526231,0.0055262316
+blue_last_10_avg_sig_attempted_for,0.005494688,0.0054946886
+blue_last_3_avg_sig_attempted_for,0.004570002,0.0045700027
+blue_last_3_avg_sig_landed_for,0.004448689,0.0044486895
+blue_last_10_avg_td_attempted_for,0.0043978547,0.004397855
+red_last_10_avg_ctrl_seconds_for,0.00435138,0.0043513803
+diff_last_10_avg_win,0.004309198,0.0043091984
+red_last_5_avg_ctrl_seconds_against,0.004285222,0.0042852224
+red_last_10_avg_finish_win,0.0042717736,0.004271774
+red_last_10_avg_ctrl_seconds_against,0.00426569,0.0042656907
+diff_reach_inches,0.004264514,0.0042645144
+diff_last_10_avg_total_str_landed_against,0.0041490975,0.004149098
+blue_last_5_avg_decision_win,0.0040774266,0.004077427
+stance_matchup_Unknown_vs_Orthodox,0.003979931,0.0039799316
+diff_last_3_avg_sig_attempted_for,0.0038550645,0.0038550647
+red_career_wins,0.0038047119,0.003804712
+red_last_10_avg_submission_win,0.003790148,0.0037901483
+red_last_5_sig_acc_against,0.0037703128,0.003770313
+blue_career_avg_sub_att_for,0.0036134857,0.003613486
+diff_last_10_avg_total_str_attempted_against,0.0035311289,0.003531129
+diff_last_5_avg_td_success_for,0.0034661049,0.003466105
+blue_weight_lbs,0.0034598308,0.003459831
+red_stance_Unknown,0.0034319323,0.0034319325
+weight_class_Open Weight,0.0034277057,0.003427706
+blue_career_avg_sig_attempted_against,0.003397179,0.0033971793
+red_last_3_avg_td_attempted_for,0.0033434792,0.0033434795
+blue_last_5_avg_rounds_fought,0.0032985234,0.0032985236
+red_last_5_avg_submission_win,0.0032975336,0.0032975338
+blue_career_avg_sig_landed_for,0.0032686684,0.0032686687
+red_age_years,0.0032664621,0.0032664624
+diff_career_sig_acc_against,0.0032508885,0.0032508888
+blue_career_wins,0.0032133255,0.0032133257
+diff_last_5_avg_sig_landed_for,0.0032040651,0.0032040654
+red_last_3_avg_td_success_for,0.0031999103,0.0031999105
+diff_last_5_avg_fight_duration_seconds,0.0031881446,0.0031881449
+red_last_10_avg_sub_att_for,0.0031675675,0.0031675678
+red_last_10_avg_td_success_for,0.0031239484,0.0031239486
+red_career_avg_finish_loss,0.0030761969,0.003076197
+blue_career_fights,0.0030397594,0.0030397596
+red_career_td_acc_for,0.0030200495,0.0030200498
+diff_last_3_avg_finish_loss,0.0029921497,0.00299215
+red_last_3_sig_acc_against,0.0029871797,0.00298718
+diff_last_3_avg_sig_landed_for,0.0029715216,0.0029715218
+blue_career_avg_fight_duration_seconds,0.0029682147,0.002968215
+red_last_3_avg_rounds_fought,0.0029610163,0.0029610165
+red_career_losses,0.002947065,0.0029470653
+red_career_finish_loss_rate,0.0029422771,0.0029422774
+title_fight,0.002924756,0.0029247561
+red_last_10_fight_count,0.002924027,0.0029240272
+red_last_5_avg_td_success_for,0.0029103186,0.0029103188
+blue_last_3_avg_fight_duration_seconds,0.0028925226,0.0028925228
+red_last_10_td_acc_for,0.0028904176,0.0028904178
+red_last_5_avg_win,0.0028862047,0.002886205
+diff_career_avg_ctrl_seconds_against,0.0028824417,0.002882442
+diff_last_5_avg_sig_attempted_for,0.0028802322,0.0028802324
+diff_career_avg_rev_against,0.0028798236,0.0028798238
+red_career_avg_td_success_for,0.0028686626,0.0028686628
+red_weight_lbs,0.0028686067,0.002868607
+diff_last_10_avg_submission_loss,0.002866824,0.0028668242
+diff_last_3_avg_decision_loss,0.0028259177,0.002825918
+blue_career_win_rate,0.0028131844,0.0028131846
+red_career_avg_sub_att_for,0.0028127052,0.0028127055
+diff_last_10_avg_decision_loss,0.0027950292,0.0027950294
+diff_last_10_avg_sub_att_for,0.0027921926,0.0027921929
+red_career_avg_ko_tko_loss,0.0027902566,0.0027902569
+blue_last_5_avg_ctrl_seconds_for,0.0027881372,0.0027881374
+blue_last_5_avg_sig_landed_for,0.002782049,0.0027820491
+red_last_5_avg_ko_tko_loss,0.0027714856,0.0027714858
+blue_last_3_avg_decision_loss,0.0027681743,0.0027681745
+blue_last_3_td_acc_for,0.0027585456,0.0027585458
+blue_last_3_avg_ctrl_seconds_for,0.0027389727,0.002738973
+blue_career_td_acc_for,0.00272474,0.0027247402
+diff_weight_lbs,0.0027104975,0.0027104977
+red_career_avg_td_success_against,0.0026950634,0.0026950636
+red_reach_inches,0.0026941714,0.0026941716
+blue_career_avg_total_str_attempted_against,0.0026886754,0.0026886757
+red_career_avg_kd_against,0.0026812886,0.0026812889
+red_career_avg_td_attempted_against,0.002676692,0.0026766923
+blue_last_5_avg_sub_att_against,0.0026715256,0.0026715258
+diff_last_10_avg_ko_tko_loss,0.0026448646,0.0026448648
+blue_last_10_avg_fight_duration_seconds,0.0026438604,0.0026438606
+red_last_10_avg_total_str_landed_for,0.0026333446,0.0026333448
+diff_last_5_avg_sub_att_for,0.0026264698,0.00262647
+diff_last_10_sig_acc_against,0.0026254626,0.0026254628
+blue_last_5_avg_fight_duration_seconds,0.0026207378,0.002620738
+blue_last_3_avg_sub_att_for,0.0026133452,0.0026133454
+blue_career_avg_td_success_for,0.0026030256,0.0026030259
+diff_career_avg_kd_against,0.0025802597,0.00258026
+diff_last_5_avg_total_str_attempted_against,0.0025776844,0.0025776846
+blue_last_10_td_acc_for,0.0025772976,0.0025772979
+diff_last_3_avg_kd_against,0.0025743837,0.002574384
+blue_career_avg_finish_win,0.0025624898,0.00256249
+red_last_5_td_acc_for,0.0025610891,0.0025610893
+diff_career_avg_td_attempted_for,0.0025424645,0.0025424648
+blue_career_avg_total_str_landed_for,0.002539295,0.0025392952
+red_last_5_avg_total_str_landed_for,0.0025291767,0.0025291769
+red_last_3_avg_ctrl_seconds_for,0.0025276614,0.0025276616
+diff_last_3_avg_sig_landed_against,0.002521683,0.0025216832
+diff_last_5_avg_td_attempted_for,0.0025099923,0.0025099926
+blue_career_sig_acc_against,0.002509266,0.0025092661
+red_last_10_avg_sig_attempted_against,0.0025082484,0.0025082487
+blue_last_5_td_acc_against,0.0025080706,0.0025080708
+blue_last_10_avg_td_attempted_against,0.002506056,0.0025060563
+blue_career_avg_total_str_landed_against,0.0024916234,0.0024916236
+blue_last_10_avg_ko_tko_win,0.002484112,0.0024841123
+blue_last_3_td_acc_against,0.0024818021,0.0024818024
+red_career_avg_total_str_landed_for,0.0024802445,0.0024802447
+red_last_3_avg_total_str_landed_for,0.00247876,0.0024787602
+blue_last_10_avg_total_str_landed_against,0.0024660933,0.0024660935
+blue_last_5_avg_kd_against,0.0024562236,0.0024562238
+diff_career_avg_total_str_attempted_for,0.0024439618,0.002443962
+red_last_5_avg_sig_landed_for,0.0024406456,0.0024406458
+red_career_avg_submission_win,0.0024264988,0.002426499
+red_career_avg_sub_att_against,0.0024164952,0.0024164955
+blue_last_10_avg_total_str_landed_for,0.0024131571,0.0024131574
+blue_last_3_avg_finish_loss,0.0024083003,0.0024083005
+diff_last_5_td_acc_against,0.0024052705,0.0024052707
+red_career_avg_finish_win,0.0024017887,0.002401789
+blue_career_avg_sub_att_against,0.0023919784,0.0023919786
+blue_last_10_sig_acc_against,0.0023915623,0.0023915626
+diff_last_10_avg_submission_win,0.002383788,0.0023837883
+red_last_3_td_acc_against,0.0023765303,0.0023765306
+red_last_10_avg_td_attempted_for,0.0023652029,0.002365203
+diff_career_sig_acc_for,0.0023643652,0.0023643654
+red_last_3_avg_kd_for,0.0023567867,0.002356787
+red_last_3_avg_sig_attempted_for,0.002353392,0.0023533923
+blue_last_5_avg_total_str_landed_against,0.0023476018,0.002347602
+red_career_ko_tko_win_rate,0.0023463813,0.0023463815
+red_career_avg_sig_landed_for,0.002341448,0.0023414483
+blue_last_10_td_acc_against,0.0023394928,0.002339493
+red_last_5_avg_sig_attempted_against,0.0023368746,0.0023368748
+diff_last_10_avg_sig_landed_against,0.0023343917,0.002334392
+blue_last_10_avg_sub_att_against,0.0023294026,0.0023294028
+blue_last_3_sig_acc_against,0.002317733,0.0023177331
+diff_last_10_avg_total_str_attempted_for,0.002306948,0.0023069482
+diff_last_3_avg_total_str_attempted_against,0.0023029218,0.002302922
+diff_career_avg_sub_att_for,0.0023025787,0.0023025789
+diff_last_3_avg_total_str_attempted_for,0.0022878412,0.0022878414
+diff_career_wins,0.002286026,0.0022860263
+red_last_3_td_acc_for,0.0022587243,0.0022587245
+red_career_fights,0.002250781,0.0022507813
+diff_last_3_avg_rounds_fought,0.0022496278,0.002249628
+blue_career_td_acc_against,0.0022470846,0.0022470849
+diff_last_5_sig_acc_against,0.0022469105,0.0022469107
+blue_last_3_avg_td_attempted_against,0.002246456,0.0022464562
+diff_last_3_avg_win,0.0022434886,0.0022434888
+diff_last_3_avg_td_success_for,0.00223426,0.0022342603
+diff_career_avg_sig_landed_against,0.0022269564,0.0022269567
+diff_last_3_td_acc_against,0.0022158022,0.0022158024
+blue_last_5_avg_finish_win,0.002214431,0.0022144313
+red_last_5_avg_total_str_attempted_for,0.0022116783,0.0022116785
+red_last_5_avg_sub_att_against,0.0022061272,0.0022061274
+blue_last_3_avg_td_attempted_for,0.0022032952,0.0022032955
+blue_career_avg_kd_against,0.0021982335,0.0021982337
+diff_last_5_avg_decision_win,0.0021968987,0.002196899
+blue_last_10_avg_ctrl_seconds_for,0.0021885543,0.0021885545
+blue_career_submission_win_rate,0.0021810757,0.002181076
+red_last_10_avg_rev_for,0.0021775304,0.0021775307
+red_last_10_avg_td_success_against,0.0021772496,0.0021772499
+red_career_decision_win_rate,0.0021758,0.0021758003
+diff_career_avg_win,0.0021737372,0.0021737374
+blue_career_finish_loss_rate,0.0021694847,0.002169485
+blue_last_3_avg_total_str_attempted_for,0.0021678614,0.0021678617
+red_last_3_avg_td_attempted_against,0.0021642467,0.002164247
+blue_last_5_avg_ctrl_seconds_against,0.0021634756,0.0021634758
+diff_last_3_td_acc_for,0.002163002,0.0021630023
+blue_last_3_avg_td_success_for,0.0021589007,0.002158901
+diff_last_10_avg_total_str_landed_for,0.0021527577,0.002152758
+blue_last_10_avg_total_str_attempted_for,0.0021519172,0.0021519174
+diff_career_losses,0.002151638,0.0021516383
+red_career_submission_win_rate,0.0021481623,0.0021481626
+red_last_3_avg_total_str_attempted_against,0.002147532,0.0021475323
+diff_career_avg_finish_win,0.0021452957,0.002145296
+diff_last_3_avg_td_attempted_for,0.002141266,0.0021412661
+diff_last_10_avg_kd_against,0.0021401758,0.002140176
+red_career_avg_ctrl_seconds_for,0.0021395462,0.0021395464
+blue_career_avg_sig_landed_against,0.002135269,0.0021352693
+diff_last_3_avg_submission_loss,0.00213344,0.0021334402
+diff_last_3_avg_td_attempted_against,0.0021279699,0.00212797
+blue_career_sig_acc_for,0.0021262,0.0021262001
+red_last_10_sig_acc_against,0.0021243352,0.0021243354
+blue_last_10_avg_kd_against,0.0021241072,0.0021241074
+diff_last_5_avg_total_str_attempted_for,0.0021226015,0.0021226017
+blue_last_10_avg_kd_for,0.0021225254,0.0021225256
+red_last_5_avg_total_str_attempted_against,0.0021186133,0.0021186136
+blue_last_5_avg_sig_attempted_for,0.0021082745,0.0021082747
+diff_last_10_fight_count,0.0021050475,0.0021050477
+diff_career_td_acc_for,0.0020991703,0.0020991706
+diff_last_3_sig_acc_against,0.00209559,0.0020955903
+diff_career_submission_win_rate,0.0020952637,0.002095264
+diff_last_3_avg_kd_for,0.002092006,0.0020920062
+blue_height_inches,0.00208909,0.0020890902
+diff_last_10_avg_td_success_for,0.0020851563,0.0020851565
+blue_career_avg_rev_for,0.0020838887,0.002083889
+blue_last_5_avg_td_attempted_for,0.0020781078,0.002078108
+diff_career_avg_sig_attempted_against,0.0020773537,0.002077354
+red_career_avg_ko_tko_win,0.0020728835,0.0020728838
+weight_class_Lightweight,0.0020719501,0.0020719504
+diff_career_avg_ko_tko_loss,0.0020715096,0.0020715098
+diff_last_3_sig_acc_for,0.0020692567,0.002069257
+blue_last_3_avg_sub_att_against,0.0020677473,0.0020677475
+diff_career_avg_total_str_landed_for,0.0020653815,0.0020653817
+diff_last_10_avg_sig_landed_for,0.0020597666,0.0020597668
+red_last_10_avg_td_attempted_against,0.0020504212,0.0020504214
+blue_career_avg_td_attempted_for,0.002050211,0.0020502112
+diff_last_10_avg_ctrl_seconds_against,0.002044104,0.0020441043
+diff_last_10_sig_acc_for,0.0020432284,0.0020432286
+red_last_3_avg_fight_duration_seconds,0.0020375575,0.0020375578
+red_career_avg_fight_duration_seconds,0.002037178,0.0020371783
+blue_career_avg_ctrl_seconds_against,0.0020343692,0.0020343694
+diff_last_5_avg_sub_att_against,0.002031504,0.0020315042
+diff_last_3_avg_sub_att_for,0.0020313687,0.002031369
+red_career_td_acc_against,0.0020297396,0.0020297398
+blue_last_3_avg_sig_attempted_against,0.0020281472,0.0020281475
+diff_career_fights,0.0020274746,0.0020274748
+blue_career_avg_kd_for,0.0020238075,0.0020238077
+diff_career_avg_sub_att_against,0.0020235227,0.002023523
+diff_career_avg_rev_for,0.0020223032,0.0020223034
+red_last_3_avg_sig_landed_against,0.002020016,0.0020200163
+diff_last_5_avg_ko_tko_loss,0.0020197358,0.002019736
+diff_last_5_avg_total_str_landed_against,0.0020190128,0.002019013
+diff_last_5_avg_submission_loss,0.0020186226,0.0020186228
+red_last_10_avg_total_str_attempted_for,0.0020181658,0.002018166
+red_last_10_avg_decision_win,0.002010229,0.0020102293
+diff_last_10_avg_decision_win,0.0020032073,0.0020032076
+blue_last_5_sig_acc_for,0.0020028753,0.0020028756
+red_last_3_avg_sub_att_against,0.002002504,0.0020025042
+red_last_10_sig_acc_for,0.0019951826,0.0019951828
+diff_last_5_avg_ctrl_seconds_for,0.001993449,0.0019934492
+blue_age_years,0.0019914866,0.0019914869
+red_career_sig_acc_against,0.0019901032,0.0019901034
+diff_last_3_avg_sub_att_against,0.001987975,0.0019879753
+diff_last_10_avg_td_success_against,0.0019868978,0.001986898
+diff_last_3_avg_total_str_landed_against,0.0019829518,0.001982952
+red_last_10_avg_submission_loss,0.0019820952,0.0019820954
+blue_career_avg_td_attempted_against,0.001973347,0.0019733473
+blue_last_5_avg_total_str_attempted_for,0.001972465,0.0019724653
+diff_last_10_avg_sub_att_against,0.0019723205,0.0019723207
+red_career_avg_total_str_attempted_for,0.0019718304,0.0019718306
+stance_matchup_Orthodox_vs_Orthodox,0.001971508,0.0019715081
+red_career_avg_kd_for,0.001970539,0.0019705393
+blue_last_5_avg_sub_att_for,0.0019687735,0.0019687738
+red_last_3_avg_decision_loss,0.0019666627,0.001966663
+diff_last_10_avg_finish_win,0.0019632934,0.0019632936
+blue_last_3_avg_finish_win,0.001963117,0.0019631172
+blue_last_10_avg_rev_against,0.0019568761,0.0019568764
+red_last_3_avg_sig_landed_for,0.0019492176,0.0019492178
+diff_last_5_avg_finish_loss,0.001948551,0.0019485512
+red_last_10_avg_sig_attempted_for,0.0019417377,0.0019417378
+blue_last_5_avg_total_str_landed_for,0.0019379957,0.0019379958
+red_last_10_avg_finish_loss,0.0019356406,0.0019356407
+red_last_3_avg_ko_tko_win,0.0019350009,0.001935001
+diff_last_10_avg_td_attempted_against,0.0019319238,0.0019319239
+red_stance_Orthodox,0.0019261377,0.0019261378
+red_last_5_avg_sig_landed_against,0.0019217262,0.0019217263
+diff_last_10_avg_sig_attempted_against,0.0019103228,0.0019103229
+blue_career_decision_win_rate,0.0019057792,0.0019057794
+diff_last_10_avg_kd_for,0.0019054532,0.0019054533
+diff_last_5_fight_count,0.0019048372,0.0019048373
+red_career_avg_rounds_fought,0.001904343,0.0019043431
+blue_last_3_avg_total_str_landed_for,0.0019030713,0.0019030714
+diff_last_10_avg_fight_duration_seconds,0.0019017502,0.0019017503
+blue_career_avg_ctrl_seconds_for,0.0018983316,0.0018983317
+red_last_3_avg_kd_against,0.0018976721,0.0018976722
+red_last_10_td_acc_against,0.0018971589,0.001897159
+red_career_avg_sig_attempted_for,0.0018775361,0.0018775362
+diff_career_avg_ctrl_seconds_for,0.0018664198,0.0018664199
+diff_last_5_td_acc_for,0.0018661171,0.0018661172
+red_career_avg_sig_attempted_against,0.001864748,0.0018647481
+diff_last_10_avg_ko_tko_win,0.0018639542,0.0018639544
+diff_last_3_avg_decision_win,0.0018621781,0.0018621782
+weight_class_Women's Strawweight,0.0018592604,0.0018592605
+diff_last_5_avg_kd_for,0.0018577119,0.001857712
+diff_last_5_avg_finish_win,0.0018540764,0.0018540765
+red_career_avg_td_attempted_for,0.0018465432,0.0018465433
+red_last_5_avg_td_success_against,0.0018462829,0.001846283
+blue_last_3_fight_count,0.0018410189,0.001841019
+blue_last_5_sig_acc_against,0.0018397962,0.0018397963
+diff_career_avg_submission_loss,0.0018396439,0.001839644
+diff_career_avg_td_success_against,0.001837186,0.0018371862
+blue_last_5_avg_sig_attempted_against,0.0018331319,0.001833132
+diff_career_avg_sig_attempted_for,0.0018323932,0.0018323933
+blue_last_3_avg_total_str_landed_against,0.001830432,0.0018304321
+blue_last_10_avg_rev_for,0.0018292133,0.0018292135
+blue_career_ko_tko_win_rate,0.0018270458,0.0018270459
+diff_last_3_avg_ko_tko_win,0.001822248,0.0018222481
+diff_last_3_avg_sig_attempted_against,0.0018222011,0.0018222012
+diff_career_avg_td_attempted_against,0.0018198986,0.0018198987
+red_career_sig_acc_for,0.0018175882,0.0018175883
+blue_last_3_avg_win,0.0018172679,0.001817268
+weight_class_Featherweight,0.0018161313,0.0018161314
+red_last_10_avg_decision_loss,0.0018156086,0.0018156087
+red_last_3_avg_total_str_landed_against,0.0018155853,0.0018155854
+diff_last_3_avg_rev_for,0.0018146032,0.0018146033
+red_career_avg_decision_loss,0.0018054352,0.0018054353
+diff_career_avg_sig_landed_for,0.0017948113,0.0017948115
+red_last_10_avg_total_str_landed_against,0.0017915525,0.0017915526
+red_last_3_avg_total_str_attempted_for,0.001787925,0.0017879251
+blue_career_avg_td_success_against,0.0017823118,0.0017823119
+diff_last_5_sig_acc_for,0.0017759735,0.0017759736
+red_last_3_sig_acc_for,0.0017729389,0.001772939
+blue_last_10_avg_ctrl_seconds_against,0.0017715564,0.0017715566
+diff_career_finish_loss_rate,0.0017701826,0.0017701827
+red_last_5_avg_total_str_landed_against,0.0017637648,0.0017637649
+blue_last_10_avg_sig_landed_against,0.0017632334,0.0017632336
+blue_last_3_avg_submission_loss,0.0017625319,0.001762532
+blue_last_3_avg_ctrl_seconds_against,0.0017599728,0.0017599729
+diff_last_5_avg_sig_landed_against,0.0017549086,0.0017549087
+blue_last_10_avg_sub_att_for,0.0017397001,0.0017397002
+diff_career_avg_fight_duration_seconds,0.0017349833,0.0017349834
+diff_last_10_avg_rev_for,0.0017345798,0.0017345799
+blue_last_3_avg_total_str_attempted_against,0.0017321152,0.0017321153
+red_last_3_avg_win,0.0017314117,0.0017314118
+diff_career_avg_total_str_landed_against,0.0017291381,0.0017291382
+diff_last_5_avg_ctrl_seconds_against,0.0017263289,0.001726329
+diff_last_5_avg_td_attempted_against,0.0017165022,0.0017165024
+red_career_avg_total_str_attempted_against,0.0017125781,0.0017125782
+diff_last_5_avg_total_str_landed_for,0.0017116843,0.0017116844
+red_career_avg_rev_for,0.00170504,0.0017050401
+blue_career_losses,0.0017016855,0.0017016856
+blue_last_5_avg_td_attempted_against,0.0016997479,0.001699748
+diff_last_10_td_acc_against,0.0016964981,0.0016964982
+diff_career_ko_tko_win_rate,0.0016962886,0.0016962887
+diff_last_5_avg_ko_tko_win,0.0016850748,0.0016850749
+diff_career_avg_total_str_attempted_against,0.0016812554,0.0016812555
+diff_last_3_avg_total_str_landed_for,0.0016786414,0.0016786415
+blue_last_5_td_acc_for,0.0016637722,0.0016637723
+red_career_avg_rev_against,0.0016618869,0.001661887
+blue_last_5_avg_td_success_against,0.001659158,0.0016591582
+diff_career_avg_kd_for,0.0016588791,0.0016588792
+blue_last_10_avg_rounds_fought,0.0016586449,0.001658645
+diff_last_10_td_acc_for,0.0016529313,0.0016529314
+blue_last_5_avg_kd_for,0.0016526399,0.00165264
+blue_last_3_sig_acc_for,0.001652003,0.0016520031
+red_last_10_avg_rounds_fought,0.0016503665,0.0016503666
+diff_career_avg_ko_tko_win,0.0016444656,0.0016444657
+red_last_3_avg_sub_att_for,0.0016414357,0.0016414358
+diff_career_avg_decision_loss,0.0016352105,0.0016352106
+diff_last_3_avg_finish_win,0.0016333706,0.0016333708
+blue_last_10_avg_finish_loss,0.0016288846,0.0016288847
+blue_last_3_avg_td_success_against,0.0016203158,0.001620316
+blue_last_10_avg_sig_attempted_against,0.0016166803,0.0016166804
+diff_last_5_avg_sig_attempted_against,0.001611588,0.0016115882
+red_stance_Southpaw,0.0016076944,0.0016076945
+red_last_5_avg_sub_att_for,0.0015995781,0.0015995782
+red_last_5_avg_td_attempted_for,0.0015950458,0.0015950459
+blue_last_5_avg_sig_landed_against,0.0015926268,0.0015926269
+diff_career_decision_win_rate,0.0015914782,0.0015914784
+blue_last_10_avg_td_success_against,0.0015912993,0.0015912994
+blue_last_10_sig_acc_for,0.0015900689,0.001590069
+red_last_5_avg_td_attempted_against,0.0015889128,0.0015889129
+diff_last_10_avg_td_attempted_for,0.0015592858,0.0015592859
+red_last_5_avg_decision_win,0.0015485155,0.0015485156
+diff_career_avg_td_success_for,0.0015458852,0.0015458853
+red_last_10_avg_rev_against,0.0015444879,0.001544488
+red_height_inches,0.0015409221,0.0015409222
+diff_last_10_avg_ctrl_seconds_for,0.0015318476,0.0015318478
+red_last_5_td_acc_against,0.0015313722,0.0015313723
+red_last_10_avg_sub_att_against,0.0015187272,0.0015187273
+diff_last_5_avg_kd_against,0.0015113603,0.0015113604
+red_last_5_avg_sig_attempted_for,0.0014911166,0.0014911167
+diff_last_3_avg_td_success_against,0.0014834965,0.0014834966
+diff_last_10_avg_finish_loss,0.0014828393,0.0014828395
+blue_last_3_avg_kd_against,0.0014798673,0.0014798674
+diff_career_win_rate,0.00147833,0.0014783301
+blue_last_3_avg_sig_landed_against,0.0014758145,0.0014758146
+weight_class_Flyweight,0.0014756072,0.0014756073
+red_last_5_avg_fight_duration_seconds,0.0014693298,0.0014693299
+red_last_5_avg_finish_loss,0.0014542878,0.0014542879
+blue_career_avg_rounds_fought,0.001449702,0.0014497021
+stance_matchup_Orthodox_vs_Switch,0.0014451928,0.001445193
+red_career_avg_total_str_landed_against,0.0014434161,0.0014434162
+diff_last_3_avg_ctrl_seconds_against,0.0014377452,0.0014377453
+stance_matchup_Orthodox_vs_Unknown,0.0014097315,0.0014097316
+red_last_5_avg_ctrl_seconds_for,0.0014080218,0.0014080219
+stance_matchup_Orthodox_vs_Southpaw,0.0013989802,0.0013989803
+blue_career_avg_rev_against,0.0013900186,0.0013900187
+red_last_5_avg_rounds_fought,0.0013893645,0.0013893646
+diff_last_5_avg_td_success_against,0.001384247,0.0013842471
+blue_last_5_avg_total_str_attempted_against,0.0013664095,0.0013664096
+diff_career_avg_finish_loss,0.0013565777,0.0013565778
+blue_career_avg_decision_loss,0.0013235646,0.0013235647
+red_last_5_avg_submission_loss,0.0013196885,0.0013196886
+red_career_avg_win,0.001314276,0.0013142761
+weight_class_Bout,0.0013038368,0.0013038369
+diff_last_10_avg_rounds_fought,0.0012982781,0.0012982782
+blue_stance_Unknown,0.0012939129,0.001293913
+diff_career_td_acc_against,0.0012926587,0.0012926589
+blue_last_10_avg_decision_win,0.0012757265,0.0012757266
+blue_stance_Orthodox,0.0012576603,0.0012576604
+red_last_10_avg_kd_against,0.0012307705,0.0012307706
+red_last_10_avg_ko_tko_loss,0.0012134358,0.0012134359
+red_last_10_avg_sig_landed_for,0.001209208,0.0012092082
+diff_last_5_avg_rev_against,0.0011798103,0.0011798104
+red_last_10_avg_kd_for,0.0011675247,0.0011675248
+blue_last_10_avg_win,0.0011657111,0.0011657112
+diff_last_5_avg_rev_for,0.0011406306,0.0011406307
+blue_last_3_avg_decision_win,0.0011387649,0.001138765
+diff_last_3_avg_fight_duration_seconds,0.001118551,0.0011185511
+diff_career_avg_rounds_fought,0.001114561,0.0011145611
+red_career_avg_submission_loss,0.0010976706,0.0010976708
+red_last_5_avg_rev_against,0.0010612436,0.0010612437
+blue_last_5_avg_rev_for,0.001035701,0.0010357011
+red_last_5_sig_acc_for,0.0010253334,0.0010253335
+red_last_10_avg_fight_duration_seconds,0.00090373383,0.0009037339
+red_last_5_avg_kd_for,0.0007954925,0.00079549255
+blue_career_avg_decision_win,0.0006885562,0.00068855623
+blue_career_avg_finish_loss,0.0005431051,0.0005431052
+diff_height_inches,0.00047236783,0.00047236786
+red_last_3_fight_count,8.094192e-05,8.094193e-05
+red_last_5_avg_ko_tko_win,6.702442e-05,6.7024426e-05
+weight_class_Ultimate Fighter Australia vs. UK Welterweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter Brazil 1 Featherweight Tournament,0.0,0.0
+weight_class_5 Tournament,0.0,0.0
+weight_class_3 Tournament,0.0,0.0
+weight_class_Women's Atomweight,0.0,0.0
+weight_class_Welterweight,0.0,0.0
+weight_class_6 Tournament,0.0,0.0
+weight_class_WEC Welterweight,0.0,0.0
+weight_class_WEC Middleweight,0.0,0.0
+weight_class_WEC Lightweight,0.0,0.0
+weight_class_WEC Light Heavyweight,0.0,0.0
+weight_class_WEC Heavyweight,0.0,0.0
+weight_class_WEC Featherweight,0.0,0.0
+weight_class_WEC Bantamweight,0.0,0.0
+weight_class_7 Tournament,0.0,0.0
+weight_class_Ultimate Ultimate '96 Tournament,0.0,0.0
+weight_class_4 Tournament,0.0,0.0
+weight_class_DREAM 2011 Bantamweight Tournament,0.0,0.0
+weight_class_DREAM 2010 Light Heavyweight Tournament,0.0,0.0
+weight_class_DREAM 2009 Welterweight Tournament,0.0,0.0
+weight_class_DREAM 2011 Japan Bantamweight Tournament,0.0,0.0
+blue_career_avg_win,0.0,0.0
+blue_career_avg_total_str_attempted_for,0.0,0.0
+blue_career_avg_submission_win,0.0,0.0
+blue_career_avg_submission_loss,0.0,0.0
+weight_class_DREAM 2009 Super Hulk Tournament,0.0,0.0
+weight_class_DREAM 2009 Featherweight Tournament,0.0,0.0
+weight_class_DREAM 2008 Middleweight Tournament,0.0,0.0
+weight_class_DREAM Featherweight,0.0,0.0
+weight_class_Ultimate Ultimate '95 Tournament,0.0,0.0
+weight_class_DREAM 2008 Lightweight Tournament,0.0,0.0
+weight_class_1 Tournament,0.0,0.0
+weight_class_10 Tournament,0.0,0.0
+weight_class_Catch Weight,0.0,0.0
+weight_class_13 Heavyweight Tournament,0.0,0.0
+weight_class_13 Lightweight Tournament,0.0,0.0
+weight_class_14 Heavyweight Tournament,0.0,0.0
+weight_class_14 Middleweight Tournament,0.0,0.0
+weight_class_15 Heavyweight Tournament,0.0,0.0
+weight_class_17 Middleweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter Brazil 2 Welterweight Tournament,0.0,0.0
+weight_class_2 Tournament,0.0,0.0
+weight_class_Ultimate Fighter Brazil 1 Middleweight Tournament,0.0,0.0
+weight_class_DREAM Heavyweight,0.0,0.0
+weight_class_Ultimate Japan Heavyweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 12 Lightweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 11 Middleweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 10 Heavyweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 1 Middleweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 1 Light Heavyweight Tournament,0.0,0.0
+weight_class_TUF Nations Canada vs. Australia Welterweight Tournament,0.0,0.0
+weight_class_TUF Nations Canada vs. Australia Middleweight Tournament,0.0,0.0
+weight_class_Superfight,0.0,0.0
+weight_class_Super Heavyweight,0.0,0.0
+weight_class_Strikeforce Women's Bantamweight Tournament,0.0,0.0
+weight_class_Strikeforce Women's 145 lbs.,0.0,0.0
+weight_class_Strikeforce Women's 135 lbs.,0.0,0.0
+weight_class_Strikeforce Welterweight,0.0,0.0
+weight_class_Strikeforce Middleweight U.S.,0.0,0.0
+weight_class_Women's Bantamweight,0.0,0.0
+weight_class_Ultimate Fighter 21 Welterweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter Latin America Featherweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter Latin America Bantamweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter Latin America 3 Lightweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter Latin America 2 Welterweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter Latin America 2 Lightweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter China Welterweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter China Featherweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 4 Welterweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 4 Middleweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 3 Middleweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 3 Light Heavyweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 16 Welterweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 15 Lightweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 5 Lightweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 14 Bantamweight Tournament,0.0,0.0
+weight_class_DREAM Light Heavyweight,0.0,0.0
+weight_class_Middleweight,0.0,0.0
+weight_class_Light Heavyweight,0.0,0.0
+weight_class_Heavyweight,0.0,0.0
+weight_class_DREAM Welterweight,0.0,0.0
+weight_class_DREAM Lightweight,0.0,0.0
+weight_class_Women's Flyweight,0.0,0.0
+weight_class_Women's Featherweight,0.0,0.0
+weight_class_8 Tournament,0.0,0.0
+diff_last_5_avg_decision_loss,0.0,0.0
+diff_last_3_fight_count,0.0,0.0
+diff_last_3_avg_submission_win,0.0,0.0
+weight_class_Ultimate Fighter Brazil 4 Lightweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter Brazil 4 Bantamweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter Brazil 3 Middleweight Tournament,0.0,0.0
+weight_class_Pride 2000 Open Weight Tournament,0.0,0.0
+weight_class_Strikeforce Lightweight,0.0,0.0
+weight_class_Strikeforce Light Heavyweight,0.0,0.0
+weight_class_Strikeforce Heavyweight Grand Prix,0.0,0.0
+weight_class_Strikeforce Heavyweight,0.0,0.0
+weight_class_Strikeforce Four-Man Middleweight Tournament,0.0,0.0
+weight_class_Pride Middleweight,0.0,0.0
+weight_class_Pride Lightweight,0.0,0.0
+weight_class_Pride Heavyweight,0.0,0.0
+weight_class_Pride 2006 Welterweight Tournament,0.0,0.0
+weight_class_Pride 2006 Open Weight Tournament,0.0,0.0
+weight_class_Pride 2005 Welterweight Tournament,0.0,0.0
+weight_class_Pride 2005 Middleweight Tournament,0.0,0.0
+weight_class_Pride 2005 Lightweight Tournament,0.0,0.0
+weight_class_Pride 2004 Heavyweight Tournament,0.0,0.0
+weight_class_Pride 2003 Middleweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter Brazil 3 Heavyweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 27 Featherweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 25 Welterweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 23 Women's Strawweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 23 Light Heavyweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 22 Lightweight Tournament,0.0,0.0
+blue_last_5_avg_rev_against,0.0,0.0
+blue_last_10_avg_ko_tko_loss,0.0,0.0
+red_last_10_avg_ko_tko_win,0.0,0.0
+diff_career_avg_decision_win,0.0,0.0
+blue_stance_Switch,0.0,0.0
+blue_stance_Southpaw,0.0,0.0
+blue_stance_Sideways,0.0,0.0
+weight_class_Ultimate Fighter 14 Featherweight Tournament,0.0,0.0
+red_last_3_avg_finish_win,0.0,0.0
+red_last_3_avg_finish_loss,0.0,0.0
+red_last_3_avg_decision_win,0.0,0.0
+blue_last_10_avg_finish_win,0.0,0.0
+blue_last_5_avg_ko_tko_win,0.0,0.0
+blue_last_5_avg_ko_tko_loss,0.0,0.0
+blue_last_5_avg_finish_loss,0.0,0.0
+blue_last_5_avg_decision_loss,0.0,0.0
+red_last_10_avg_total_str_attempted_against,0.0,0.0
+diff_career_avg_submission_win,0.0,0.0
+red_career_avg_decision_win,0.0,0.0
+diff_last_3_avg_rev_against,0.0,0.0
+diff_last_3_avg_ko_tko_loss,0.0,0.0
+blue_stance_Open Stance,0.0,0.0
+weight_class_Ultimate Japan 2 Heavyweight Tournament,0.0,0.0
+blue_career_avg_ko_tko_loss,0.0,0.0
+blue_career_avg_ko_tko_win,0.0,0.0
+weight_class_Ultimate Fighter 13 Welterweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 2 Welterweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 2 Heavyweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 19 Middleweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 19 Light Heavyweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 18 Women's Bantamweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 18 Bantamweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 17 Middleweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter Australia vs. UK Lightweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 9 Welterweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 27 Lightweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 8 Lightweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 8 Light Heavyweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 7 Middleweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 6 Welterweight Tournament,0.0,0.0
+weight_class_Strikeforce Middleweight,0.0,0.0
+blue_last_5_fight_count,0.0,0.0
+blue_last_5_avg_win,0.0,0.0
+blue_last_5_avg_td_success_for,0.0,0.0
+blue_last_5_avg_submission_win,0.0,0.0
+blue_last_5_avg_submission_loss,0.0,0.0
+blue_last_10_avg_decision_loss,0.0,0.0
+weight_class_Ultimate Fighter 28 Women's Featherweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 28 Heavyweight Tournament,0.0,0.0
+weight_class_Ultimate Fighter 9 Lightweight Tournament,0.0,0.0
+stance_matchup_Orthodox_vs_Open Stance,0.0,0.0
+stance_matchup_Open Stance_vs_Southpaw,0.0,0.0
+stance_matchup_Open Stance_vs_Orthodox,0.0,0.0
+red_stance_Switch,0.0,0.0
+red_stance_Sideways,0.0,0.0
+red_stance_Open Stance,0.0,0.0
+red_last_5_fight_count,0.0,0.0
+blue_last_10_fight_count,0.0,0.0
+blue_last_10_avg_total_str_attempted_against,0.0,0.0
+blue_last_10_avg_td_success_for,0.0,0.0
+blue_last_10_avg_submission_win,0.0,0.0
+blue_last_10_avg_submission_loss,0.0,0.0
+stance_matchup_Unknown_vs_Unknown,0.0,0.0
+red_last_3_avg_td_success_against,0.0,0.0
+stance_matchup_Switch_vs_Unknown,0.0,0.0
+stance_matchup_Switch_vs_Switch,0.0,0.0
+stance_matchup_Switch_vs_Southpaw,0.0,0.0
+stance_matchup_Switch_vs_Orthodox,0.0,0.0
+stance_matchup_Southpaw_vs_Unknown,0.0,0.0
+stance_matchup_Southpaw_vs_Switch,0.0,0.0
+stance_matchup_Southpaw_vs_Southpaw,0.0,0.0
+stance_matchup_Southpaw_vs_Sideways,0.0,0.0
+stance_matchup_Southpaw_vs_Orthodox,0.0,0.0
+stance_matchup_Southpaw_vs_Open Stance,0.0,0.0
+stance_matchup_Sideways_vs_Orthodox,0.0,0.0
+stance_matchup_Sideways_vs_Open Stance,0.0,0.0
+weight_class_Bantamweight,0.0,0.0
+stance_matchup_Unknown_vs_Southpaw,0.0,0.0
+red_last_3_avg_submission_win,0.0,0.0
+red_last_3_avg_submission_loss,0.0,0.0
+red_last_3_avg_sig_attempted_against,0.0,0.0
+red_last_3_avg_rev_for,0.0,0.0
+blue_last_3_avg_submission_win,0.0,0.0
+diff_last_10_avg_rev_against,0.0,0.0
+h2h_win_diff,0.0,0.0
+red_last_3_avg_rev_against,0.0,0.0
+red_last_3_avg_ko_tko_loss,0.0,0.0
+red_last_5_avg_decision_loss,0.0,0.0
+blue_last_3_avg_rounds_fought,0.0,0.0
+blue_last_3_avg_rev_for,0.0,0.0
+blue_last_3_avg_rev_against,0.0,0.0
+stance_matchup_Orthodox_vs_Sideways,0.0,0.0
+blue_last_3_avg_ko_tko_loss,0.0,0.0
+blue_last_3_avg_kd_for,0.0,0.0
+h2h_total_fights,0.0,0.0
+h2h_red_wins,0.0,0.0
+h2h_red_win_rate,0.0,0.0
+h2h_blue_wins,0.0,0.0
+diff_last_5_avg_win,0.0,0.0
+diff_last_10_avg_sig_attempted_for,0.0,0.0
+red_last_5_avg_rev_for,0.0,0.0
+red_last_5_avg_kd_against,0.0,0.0
+red_last_5_avg_finish_win,0.0,0.0
+diff_last_5_avg_submission_win,0.0,0.0
+diff_last_5_avg_rounds_fought,0.0,0.0
+blue_last_3_avg_ko_tko_win,0.0,0.0

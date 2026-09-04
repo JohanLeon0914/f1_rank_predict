@@ -15,6 +15,7 @@ RUN pip install --no-cache-dir --upgrade pip \
 COPY src ./src
 COPY models ./models
 COPY F1 ./F1
+COPY UFC ./UFC
 
 EXPOSE 8080
 
